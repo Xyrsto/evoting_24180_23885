@@ -6,6 +6,10 @@ package evoting_24180_23885;
 
 import evoting_24180_23885.SecurityUtils.Assimetric;
 import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 
 /**
@@ -114,6 +118,14 @@ public class AddCandidato extends javax.swing.JFrame {
             if(AdminUser.getText().equals("admin") && Users.authenticate(AdminUser.getText(), AdminPassword.getText()))
             {
                 Candidato newCand = new Candidato(jTextField1.getText());
+                
+//                try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Partidos/" + newCand.getNome() + ".partido"))){
+//                    oos.writeObject(newCand);
+//                }
+//                catch(Exception err){
+//                    System.out.println(err.toString());
+//                }
+                
                 mainWindow.updateCandidatos(newCand);
                 dispose();
             }
