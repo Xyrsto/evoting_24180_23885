@@ -49,7 +49,27 @@ public class MainScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);
+        loadBlockchain();
         loadCandidatos();
+    }
+    
+    public void loadVotos(){
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("votes/votesCurState.votes"))){
+            votos = (ArrayList<Voto>)ois.readObject();
+            for(Voto v : votos){
+                v.toString();
+            }
+        }catch(Exception err){
+            System.out.println(err.toString());
+        }
+    }
+      
+    public void loadBlockchain(){
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Blockchains/blockchain1696330634509.obj"))){
+            BlockChain = (BlockChain)ois.readObject();
+        }catch(Exception err){
+            System.out.println(err.toString());
+        }
     }
 
     /**
@@ -320,7 +340,14 @@ public class MainScreen extends javax.swing.JFrame {
         
         if(votos.size() <= 10)
         {
-            votos.add(vote); 
+            votos.add(vote);           
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("votes/votesCurState.votes"))){
+                oos.writeObject(votos);
+            }
+            catch(Exception err){
+                System.out.println(err.toString());
+            }
+            
             if(votos.size() < 10)
             {              
                 return;
