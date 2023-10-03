@@ -24,9 +24,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
               <Component id="filler1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
@@ -35,19 +34,19 @@
                   </Group>
                   <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="AdminUser" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
-                          <Component id="AdminPassword" alignment="1" min="-2" pref="204" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jTextField1" min="-2" pref="188" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="AdminUser" pref="204" max="32767" attributes="0"/>
+                          <Component id="AdminPassword" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
@@ -99,18 +98,7 @@
         <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.VerticalGlue"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="AdminPassword">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Password"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AdminPasswordActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JTextField" name="AdminUser">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="User"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -123,6 +111,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Nome do candidato"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="AdminPassword">
     </Component>
   </SubComponents>
 </Form>

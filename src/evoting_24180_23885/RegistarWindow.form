@@ -30,14 +30,14 @@
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="CCField" min="-2" pref="153" max="-2" attributes="0"/>
-                      <Component id="PasswordField" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel1" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="PasswordField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="CCField" alignment="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="129" max="32767" attributes="0"/>
@@ -55,7 +55,7 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PasswordField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
@@ -64,8 +64,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="CCField">
-    </Component>
-    <Component class="javax.swing.JTextField" name="PasswordField">
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
@@ -84,6 +82,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Password"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="PasswordField">
     </Component>
   </SubComponents>
 </Form>
