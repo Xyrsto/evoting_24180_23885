@@ -117,6 +117,7 @@ public class AddCandidato extends javax.swing.JFrame {
         try{
             if(AdminUser.getText().equals("admin") && Users.authenticate(AdminUser.getText(), AdminPassword.getText()))
             {
+                
                 Candidato newCand = new Candidato(jTextField1.getText());
                 
 //                try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Partidos/" + newCand.getNome() + ".partido"))){

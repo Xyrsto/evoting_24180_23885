@@ -8,12 +8,21 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import evoting_24180_23885.Voto;
 import evoting_24180_23885.AddCandidato;
+import evoting_24180_23885.SecurityUtils.Assimetric;
+import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
+import evoting_24180_23885.SecurityUtils.Simetric;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.Key;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -32,7 +41,7 @@ public class MainScreen extends javax.swing.JFrame {
     public Eleitor loggedUser;
     public boolean userHasVoted;
     BlockChain BlockChain = new BlockChain();
-    ArrayList<Voto> votos = new ArrayList<>();
+    ArrayList<Object> votos = new ArrayList<>();
     ArrayList<Object> dataTree = new ArrayList<>();
     ArrayList<Candidato> candidatos = new ArrayList<>();
     private final int DIFFICULTY = 5;
@@ -55,8 +64,8 @@ public class MainScreen extends javax.swing.JFrame {
     
     public void loadVotos(){
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("votes/votesCurState.votes"))){
-            votos = (ArrayList<Voto>)ois.readObject();
-            for(Voto v : votos){
+            votos = (ArrayList<Object>)ois.readObject();
+            for(Object v : votos){
                 v.toString();
             }
         }catch(Exception err){
@@ -299,11 +308,12 @@ public class MainScreen extends javax.swing.JFrame {
             return;
         }
         
-        if(loggedUser.getHasVoted() == true){
-            System.out.println(loggedUser.getHasVoted());
-            System.out.println("Já votou");
-            return;
-        }
+        //este código é essencial para o bom funcionamento da app, apenas está comentado para teste
+//        if(loggedUser.getHasVoted() == true){
+//            System.out.println(loggedUser.getHasVoted());
+//            System.out.println("Já votou");
+//            return;
+//        }
         System.out.println("AUTENTICADO");
         loggedUser.setHasVoted(true);
         loggedUser.saveVote(loggedUser.getNumCC());
@@ -319,6 +329,7 @@ public class MainScreen extends javax.swing.JFrame {
         
         //adds the strings to an array called "elements"
         Voto vote = new Voto(loggedUser, partido);
+        
         
         for (int i = 0; i < candidatos.size(); i++) 
         {
@@ -340,7 +351,29 @@ public class MainScreen extends javax.swing.JFrame {
         
         if(votos.size() <= 10)
         {
-            votos.add(vote);           
+            
+            try{             
+                //O QUE ESTÁ DENTRO DO TRY NAO FUNCIONA!!! TO FIX!!! -> CADA VOTO DEVE DE SER ENCRIPTADO ANTES DE SER GUARDADO! 
+                //encriptar dados usando uma chave simetrica
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(vote);
+                oos.close(); // Close the ObjectOutputStream
+                byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
+                
+                Key simKey = Simetric.loadKey("keys/USERadmin.sim", "AES");
+                byte[] simetricVote = Simetric.encrypt(serializedVote, simKey);
+                
+                
+                
+                PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
+                votos.add(Simetric.encrypt(serializedVote, pubKey));
+                //byte[] encryptVote = Simetric.encrypt(vote, key);
+            }
+            catch(Exception err){
+                System.out.println(err.toString());
+            }         
+            
             try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("votes/votesCurState.votes"))){
                 oos.writeObject(votos);
             }
