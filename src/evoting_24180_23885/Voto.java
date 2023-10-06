@@ -12,32 +12,32 @@ import java.io.Serializable;
  */
 public class Voto implements Serializable
 {
-    private Eleitor eleitor;
-    private Candidato partido;
+    private String eleitor;
+    private String partido;
     
-    public Voto(Eleitor eleitor, Candidato partido)
+    public Voto(String eleitor, String partido)
     {
         this.eleitor = eleitor;
         this.partido = partido;
     }
 
     public String getEleitor() {
-        return eleitor.getNumCC();
+        return eleitor;
     }
 
-    public void setEleitor(Eleitor eleitor) {
+    public void setEleitor(String eleitor) {
         this.eleitor = eleitor;
     }
 
     public String getPartido() {
-        return partido.getNome();
+        return partido;
     }
 
-    public void setPartido(Candidato partido) {
+    public void setPartido(String partido) {
         this.partido = partido;
     }
     
     public String toString(){
-        return eleitor.getNumCC() + "->" + partido.getNome();
+        return eleitor + "->" + partido;
     }
 }

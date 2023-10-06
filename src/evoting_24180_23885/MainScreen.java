@@ -300,32 +300,33 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
     
-    public EncryptedVote encryptVote(Voto vote) throws Exception
-    {
-        //encriptação híbrida               
-        //coversão do objeto Voto para bytes       
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(vote);
-        oos.close(); // Close the ObjectOutputStream
-        byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
-
-        //geração de uma chave simétrica para a encriptação do voto.
-        Key simKey = Simetric.generateAESKey(256);
-        byte[] simetricVote = Simetric.encrypt(serializedVote, simKey);
-
-        //guardar chave simétrica
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        Simetric.saveKey(simKey, String.valueOf(time.getTime()));
-
-        //carregar chave pública para encriptar chave simétrica gerada.
-        PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
-        byte[] simetricKeyEncrypted = Simetric.encrypt(simKey.getEncoded(), pubKey);
-
-        //byte[] encryptVote = Simetric.encrypt(simetricVote, pubKey);
-
-        return new EncryptedVote(simetricVote, simetricKeyEncrypted, pubKey);
-    }
+    //legacy code -> not used anywhere
+//    public EncryptedVote encryptVote(Voto vote) throws Exception
+//    {
+//        //encriptação híbrida               
+//        //coversão do objeto Voto para bytes       
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        ObjectOutputStream oos = new ObjectOutputStream(baos);
+//        oos.writeObject(vote);
+//        oos.close(); // Close the ObjectOutputStream
+//        byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
+//
+//        //geração de uma chave simétrica para a encriptação do voto.
+//        Key simKey = Simetric.generateAESKey(256);
+//        byte[] simetricVote = Simetric.encrypt(serializedVote, simKey);
+//
+//        //guardar chave simétrica
+//        Timestamp time = new Timestamp(System.currentTimeMillis());
+//        Simetric.saveKey(simKey, String.valueOf(time.getTime()));
+//
+//        //carregar chave pública para encriptar chave simétrica gerada.
+//        PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
+//        byte[] simetricKeyEncrypted = Simetric.encrypt(simKey.getEncoded(), pubKey);
+//
+//        //byte[] encryptVote = Simetric.encrypt(simetricVote, pubKey);
+//
+//        return new EncryptedVote(simetricVote, simetricKeyEncrypted, pubKey);
+//    }
     
     //When clicking the button "Votar" it creates a new block in the blockchain with the information about the elector and the party thats being voted
     //The jTextArea1 shows the current blockchain and the jTextArea2 shows the merkle tree.
@@ -336,12 +337,12 @@ public class MainScreen extends javax.swing.JFrame {
             return;
         }
         
-        //controlo para garantir que cada utilizador apenas vota uma vez
-        if(loggedUser.getHasVoted() == true){
-            System.out.println(loggedUser.getHasVoted());
-            System.out.println("Já votou");
-            return;
-        }
+//        //controlo para garantir que cada utilizador apenas vota uma vez
+//        if(loggedUser.getHasVoted() == true){
+//            System.out.println(loggedUser.getHasVoted());
+//            System.out.println("Já votou");
+//            return;
+//        }
 
         System.out.println("AUTENTICADO");
         loggedUser.setHasVoted(true);
@@ -357,9 +358,7 @@ public class MainScreen extends javax.swing.JFrame {
         
         
         //adds the strings to an array called "elements"
-        Voto vote = new Voto(loggedUser, partido);
-        
-        
+        //Voto vote = new Voto(loggedUser, partido);
         for (int i = 0; i < candidatos.size(); i++) 
         {
             if(candidatos.get(i).nome == jComboBox1.getSelectedItem().toString())
@@ -378,12 +377,24 @@ public class MainScreen extends javax.swing.JFrame {
             }
         }
         
+        Voto vote = new Voto(loggedUser.getNumCC(), partido.getNome());
+        
         if(votos.size() <= 10)
         {
             
             try{             
                 //adiciona voto encriptado com encriptação híbrida                             
-                votos.add(encryptVote(vote));
+                //votos.add(encryptVote(vote));
+                
+                //código de encriptação otimizado
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(vote);
+                oos.close(); // Close the ObjectOutputStream
+                byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
+                PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
+                votos.add(Simetric.encrypt(serializedVote, pubKey));
+                
             }
             catch(Exception err){
                 System.out.println(err.toString());
