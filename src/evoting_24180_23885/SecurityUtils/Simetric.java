@@ -122,8 +122,8 @@ public class Simetric
     }
     
     public static void saveKey(Key key, String num) throws Exception{
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        Files.write(Paths.get("keys/USERADMIN.sim"), key.getEncoded());
+        //Timestamp time = new Timestamp(System.currentTimeMillis());
+        Files.write(Paths.get("keys/USER" + num + ".sim"), key.getEncoded());
     }
     
     public static Key loadKey(String keyName, String algoritmo) throws Exception{

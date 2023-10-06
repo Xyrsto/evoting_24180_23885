@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import evoting_24180_23885.Voto;
 import evoting_24180_23885.AddCandidato;
 import evoting_24180_23885.SecurityUtils.Assimetric;
+import evoting_24180_23885.SecurityUtils.AssinaturaDigital;
 import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
 import evoting_24180_23885.SecurityUtils.Simetric;
 import java.io.ByteArrayOutputStream;
@@ -299,6 +300,33 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }
     
+    public EncryptedVote encryptVote(Voto vote) throws Exception
+    {
+        //encriptação híbrida               
+        //coversão do objeto Voto para bytes       
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(vote);
+        oos.close(); // Close the ObjectOutputStream
+        byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
+
+        //geração de uma chave simétrica para a encriptação do voto.
+        Key simKey = Simetric.generateAESKey(256);
+        byte[] simetricVote = Simetric.encrypt(serializedVote, simKey);
+
+        //guardar chave simétrica
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Simetric.saveKey(simKey, String.valueOf(time.getTime()));
+
+        //carregar chave pública para encriptar chave simétrica gerada.
+        PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
+        byte[] simetricKeyEncrypted = Simetric.encrypt(simKey.getEncoded(), pubKey);
+
+        //byte[] encryptVote = Simetric.encrypt(simetricVote, pubKey);
+
+        return new EncryptedVote(simetricVote, simetricKeyEncrypted, pubKey);
+    }
+    
     //When clicking the button "Votar" it creates a new block in the blockchain with the information about the elector and the party thats being voted
     //The jTextArea1 shows the current blockchain and the jTextArea2 shows the merkle tree.
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -308,12 +336,13 @@ public class MainScreen extends javax.swing.JFrame {
             return;
         }
         
-        //este código é essencial para o bom funcionamento da app, apenas está comentado para teste
-//        if(loggedUser.getHasVoted() == true){
-//            System.out.println(loggedUser.getHasVoted());
-//            System.out.println("Já votou");
-//            return;
-//        }
+        //controlo para garantir que cada utilizador apenas vota uma vez
+        if(loggedUser.getHasVoted() == true){
+            System.out.println(loggedUser.getHasVoted());
+            System.out.println("Já votou");
+            return;
+        }
+
         System.out.println("AUTENTICADO");
         loggedUser.setHasVoted(true);
         loggedUser.saveVote(loggedUser.getNumCC());
@@ -321,7 +350,7 @@ public class MainScreen extends javax.swing.JFrame {
 //        if(jComboBox1.getSelectedIndex() == -1 || jTextField1.getText() == "")
 //            return;
         //gets the text from both jTextFields
-        String eleitor = loggedUser.getNumCC();
+        //String eleitor = loggedUser.getNumCC();
         
         //TODO -> GUARDAR NUM FICHEIRO O NUMERO DE VOTOS DO PARTIDO
         Candidato partido = new Candidato("Null");
@@ -353,22 +382,8 @@ public class MainScreen extends javax.swing.JFrame {
         {
             
             try{             
-                //O QUE ESTÁ DENTRO DO TRY NAO FUNCIONA!!! TO FIX!!! -> CADA VOTO DEVE DE SER ENCRIPTADO ANTES DE SER GUARDADO! 
-                //encriptar dados usando uma chave simetrica
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(baos);
-                oos.writeObject(vote);
-                oos.close(); // Close the ObjectOutputStream
-                byte[] serializedVote = baos.toByteArray(); // Get the serialized data as a byte array
-                
-                Key simKey = Simetric.loadKey("keys/USERadmin.sim", "AES");
-                byte[] simetricVote = Simetric.encrypt(serializedVote, simKey);
-                
-                
-                
-                PublicKey pubKey = Assimetric.getPublicKey("keys/USERadmin.pubkey");
-                votos.add(Simetric.encrypt(serializedVote, pubKey));
-                //byte[] encryptVote = Simetric.encrypt(vote, key);
+                //adiciona voto encriptado com encriptação híbrida                             
+                votos.add(encryptVote(vote));
             }
             catch(Exception err){
                 System.out.println(err.toString());

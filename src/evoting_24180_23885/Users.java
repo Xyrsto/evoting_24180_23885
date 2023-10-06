@@ -27,7 +27,7 @@ public class Users {
             return;
         }
         //gerar chaves
-        KeyPair keyPair = Assimetric.generateKeyPair(1024);
+        KeyPair keyPair = Assimetric.generateKeyPair(2048);
         
         //guardar a chave pública
         Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
