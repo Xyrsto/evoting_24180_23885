@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.Key;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +23,9 @@ public class AddCandidato extends javax.swing.JFrame {
     // Referencia à mainWindow
     public MainScreen mainWindow ;
     public boolean adminAuth;
+    private BlockChain candidatosChain = new BlockChain();
+    public ArrayList<Object> list = new ArrayList<>();
+    private final int DIFFICULTY = 5;
     
     /**
      * Creates new form VerWindow
@@ -129,6 +134,32 @@ public class AddCandidato extends javax.swing.JFrame {
                 
                 mainWindow.updateCandidatos(newCand);
                 dispose();
+                
+                if(mainWindow.candidatos.size() <= 3){
+                    if(mainWindow.candidatos.size() < 3)
+                    {              
+                        return;
+                    }
+                    //builds a merkle tree with whats added on the elements.
+                    MerkleTreeString merkleTree = new MerkleTreeString(mainWindow.candidatos);
+
+                    list.add(mainWindow.candidatos);
+                    list.add(merkleTree);
+
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                    try (FileOutputStream fos = new FileOutputStream("Partidos/candidatosList" + merkleTree.getRoot() + ".obj");
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+                    oos.writeObject(list);
+
+                    } catch (Exception e) {
+                            System.out.println("erro");
+                      throw new RuntimeException(e);
+                    }
+                    candidatosChain.add(merkleTree.getRoot(), DIFFICULTY);
+                    candidatosChain.save("Blockchains/candidatosBlockChain.obj");
+                    list.clear();                   
+                }
             }
         }
         catch(Exception err){

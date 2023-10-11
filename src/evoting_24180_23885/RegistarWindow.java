@@ -8,10 +8,13 @@ import evoting_24180_23885.SecurityUtils.Assimetric;
 import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
 import evoting_24180_23885.SecurityUtils.Simetric;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyPair;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +22,10 @@ import java.security.KeyPair;
  */
 public class RegistarWindow extends javax.swing.JFrame {
     public MainScreen mainWindow ;
+    private BlockChain eleitoresChain = new BlockChain();
+    public ArrayList<Object> list = new ArrayList<>();
+    private final int DIFFICULTY = 5;
+    //private final int SIZEELEITORES = mainWindow.eleitoresList.size();
     /**
      * Creates new form LoginWindow
      */
@@ -104,11 +111,48 @@ public class RegistarWindow extends javax.swing.JFrame {
             Users.register(CCField.getText(), PasswordField.getText());
             Eleitor newEleitor = new Eleitor(CCField.getText(), PasswordField.getText(), false);
             Eleitor.saveVote(CCField.getText());
+            mainWindow.eleitoresList.add(newEleitor);
+            saveEleitor(mainWindow.eleitoresList);
+            
+            if(mainWindow.eleitoresList.size() <= 10){
+                if(mainWindow.eleitoresList.size() < 10)
+                {              
+                    return;
+                }
+                //builds a merkle tree with whats added on the elements.
+                MerkleTreeString merkleTree = new MerkleTreeString(mainWindow.eleitoresList);
+
+                list.add(mainWindow.eleitoresList);
+                list.add(merkleTree);
+
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                try (FileOutputStream fos = new FileOutputStream("eleitores/eleitoresList" + merkleTree.getRoot() + ".obj");
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+                oos.writeObject(list);
+
+                } catch (Exception e) {
+                        System.out.println("erro");
+                  throw new RuntimeException(e);
+                }
+                eleitoresChain.add(merkleTree.getRoot(), DIFFICULTY);
+                eleitoresChain.save("Blockchains/eleitoresBlockChain.obj");
+                list.clear();                   
+            }
         }catch(Exception err){
             System.out.println(err.toString());
         }       
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void saveEleitor(ArrayList<Object> eleitores){
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitores/eleitoresList.list"))){
+            oos.writeObject(eleitores);
+        }
+        catch(Exception err){
+            System.out.println(err.toString());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */

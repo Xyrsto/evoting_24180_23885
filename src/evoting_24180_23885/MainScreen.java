@@ -44,7 +44,9 @@ public class MainScreen extends javax.swing.JFrame {
     BlockChain BlockChain = new BlockChain();
     ArrayList<Object> votos = new ArrayList<>();
     ArrayList<Object> dataTree = new ArrayList<>();
-    ArrayList<Candidato> candidatos = new ArrayList<>();
+    public ArrayList<Object> eleitoresList = new ArrayList<>();
+    //public ArrayList<Object> candidatosList = new ArrayList<>();
+    public ArrayList<Candidato> candidatos = new ArrayList<>();
     private final int DIFFICULTY = 5;
     
     //Modelo combo box
@@ -81,6 +83,7 @@ public class MainScreen extends javax.swing.JFrame {
             System.out.println(err.toString());
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -411,7 +414,7 @@ public class MainScreen extends javax.swing.JFrame {
             {              
                 return;
             }
-                //builds a merkle tree with whats added on the elements.
+            //builds a merkle tree with whats added on the elements.
             MerkleTreeString merkleTree = new MerkleTreeString(votos);
 
             dataTree.add(votos);
