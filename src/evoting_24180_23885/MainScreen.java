@@ -341,11 +341,11 @@ public class MainScreen extends javax.swing.JFrame {
         }
         
         //controlo para garantir que cada utilizador apenas vota uma vez
-        if(loggedUser.getHasVoted() == true){
+        /*if(loggedUser.getHasVoted() == true){
             System.out.println(loggedUser.getHasVoted());
             System.out.println("Já votou");
             return;
-        }
+        }*/
 
         System.out.println("AUTENTICADO");
         loggedUser.setHasVoted(true);

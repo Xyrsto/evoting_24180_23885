@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import evoting_24180_23885.Miner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author rodri
@@ -39,9 +41,15 @@ public class BlockChain {
     public void add(String data, int difficulty){
         //previous block's hash
         String previousHash = getLastHash();
+        Miner mineiro = new Miner(0,0, previousHash + data, difficulty);
         
         //mines the nonce value for the block
-        int nonce = Miner.getNonce(previousHash + data, difficulty);
+        int nonce = 0;      
+        try {
+            nonce = mineiro.getNonce(previousHash + data, difficulty);
+        } catch (Exception ex) {
+            Logger.getLogger(BlockChain.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         //builds the new block
         Block newBlock = new Block(previousHash, data, nonce);
