@@ -27,27 +27,27 @@ public class Miner extends Thread{
     }
     
     @Override
-      public void run() {
-          int nonce = startNonce;
-          while (nonce < MAX_NONCE && result == -1) {
-              String hash = Hash.getHash(nonce + data);
+    public void run() {
+        int nonce = startNonce;
+        while (nonce < MAX_NONCE && result == -1) {
+            String hash = Hash.getHash(nonce + data);
 
-              if (hash.endsWith(zeros)) {
-                  result = nonce;
-              }
-              nonce += 1; // Increment by the number of threads to distribute work evenly
-          }
-      }
+            if (hash.endsWith(zeros)) {
+                result = nonce;
+            }
+            nonce += 1; // Increment by the number of threads to distribute work evenly
+        }
+    }
       
-      public int getResult() {
+    public int getResult() {
         return result;
-        }
+    }
       
-        public static int getNonce(String data, int difficulty) throws Exception {            
-            Miner mineiro = new Miner(0, 0, data, difficulty);
-            
-            mineiro.start();
-            mineiro.join();
-            return mineiro.getResult();
-        }
+    public static int getNonce(String data, int difficulty) throws InterruptedException {            
+        Miner mineiro = new Miner(0, 0, data, difficulty);
+
+        mineiro.start();
+        mineiro.join();
+        return mineiro.getResult();
+    }
 }

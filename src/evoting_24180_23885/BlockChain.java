@@ -41,12 +41,12 @@ public class BlockChain {
     public void add(String data, int difficulty){
         //previous block's hash
         String previousHash = getLastHash();
-        Miner mineiro = new Miner(0,0, previousHash + data, difficulty);
+        //Miner mineiro = new Miner(0,0, previousHash + data, difficulty);
         
         //mines the nonce value for the block
         int nonce = 0;      
         try {
-            nonce = mineiro.getNonce(previousHash + data, difficulty);
+            nonce = Miner.getNonce(previousHash + data, difficulty);
         } catch (Exception ex) {
             Logger.getLogger(BlockChain.class.getName()).log(Level.SEVERE, null, ex);
         }
