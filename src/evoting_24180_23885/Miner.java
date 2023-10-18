@@ -43,8 +43,8 @@ public class Miner extends Thread{
         return result;
     }
       
-    public static int getNonce(String data, int difficulty) throws InterruptedException {            
-        Miner mineiro = new Miner(0, 0, data, difficulty);
+    public static int getNonce(String data, int difficulty, Miner mineiro) throws InterruptedException {            
+        //Miner mineiro = new Miner(0, 0, data, difficulty);
 
         mineiro.start();
         mineiro.join();
