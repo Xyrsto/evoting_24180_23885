@@ -10,14 +10,18 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import evoting_24180_23885.Miner;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.SwingWorker;
 /**
  *
  * @author rodri
  */
 public class BlockChain {
     ArrayList<Block> chain = new ArrayList<>();
+    public JLabel jlabel = new JLabel();
     
     /**
      * gets the last hash of the blockchain
@@ -41,12 +45,13 @@ public class BlockChain {
     public void add(String data, int difficulty){
         //previous block's hash
         String previousHash = getLastHash();
-        Miner mineiro = new Miner(0,0, previousHash + data, difficulty);
+        SwingWorker<Integer,Integer> mineiro = new Miner(0,0, previousHash + data, difficulty, jlabel);
         
         //mines the nonce value for the block
         int nonce = 0;      
         try {
-            nonce = mineiro.getNonce(previousHash + data, difficulty);
+            mineiro.execute();
+            nonce = -1;
         } catch (Exception ex) {
             Logger.getLogger(BlockChain.class.getName()).log(Level.SEVERE, null, ex);
         }

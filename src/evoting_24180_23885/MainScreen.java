@@ -61,6 +61,7 @@ public class MainScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jTextArea1.setEditable(false);
         jTextArea2.setEditable(false);
+        BlockChain.jlabel = noncePreview;
         loadBlockchain();
         loadCandidatos();
     }
@@ -141,6 +142,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         label1 = new java.awt.Label();
         jComboBox1 = new javax.swing.JComboBox<>();
+        noncePreview = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -187,6 +189,8 @@ public class MainScreen extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
+
+        noncePreview.setText("<placeholder>");
 
         jMenu1.setText("Registar");
         jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
@@ -249,7 +253,8 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(noncePreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
@@ -266,7 +271,9 @@ public class MainScreen extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)
+                        .addGap(18, 18, 18)
+                        .addComponent(noncePreview)
+                        .addGap(43, 43, 43)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -567,5 +574,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField3;
     private java.awt.Label label1;
+    private javax.swing.JLabel noncePreview;
     // End of variables declaration//GEN-END:variables
 }
