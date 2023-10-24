@@ -47,7 +47,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Object> eleitoresList = new ArrayList<>();
     //public ArrayList<Object> candidatosList = new ArrayList<>();
     public ArrayList<Candidato> candidatos = new ArrayList<>();
-    private final int DIFFICULTY = 5;
+    private final int DIFFICULTY = 1;
     
     //Modelo combo box
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();

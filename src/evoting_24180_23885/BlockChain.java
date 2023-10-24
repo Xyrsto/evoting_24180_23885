@@ -45,7 +45,7 @@ public class BlockChain {
     public void add(String data, int difficulty){
         //previous block's hash
         String previousHash = getLastHash();
-        SwingWorker<Integer,Integer> mineiro = new Miner(0,0, previousHash + data, difficulty, jlabel);
+        SwingWorker<Integer,String> mineiro = new Miner(0,0, previousHash + data, difficulty, jlabel);
         
         //mines the nonce value for the block
         int nonce = 0;      
