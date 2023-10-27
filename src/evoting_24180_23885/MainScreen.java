@@ -41,13 +41,13 @@ public class MainScreen extends javax.swing.JFrame {
     public boolean isAuthenticated;
     public Eleitor loggedUser;
     public boolean userHasVoted;
-    BlockChain BlockChain = new BlockChain();
+    BlockChain BlockChain = new BlockChain(this);
     ArrayList<Object> votos = new ArrayList<>();
     ArrayList<Object> dataTree = new ArrayList<>();
     public ArrayList<Object> eleitoresList = new ArrayList<>();
     //public ArrayList<Object> candidatosList = new ArrayList<>();
     public ArrayList<Candidato> candidatos = new ArrayList<>();
-    private final int DIFFICULTY = 1;
+    private final int DIFFICULTY = 4;
     
     //Modelo combo box
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -446,12 +446,15 @@ public class MainScreen extends javax.swing.JFrame {
             //adds a new block to the block chain with the root of the merkle tree, with difficulty 5 (meaning the end of the hash has 5 zeros)
             BlockChain.add(merkleTree.getRoot(), DIFFICULTY);
 
-            jTextArea1.setText(BlockChain.toString());
-
-            votos.clear();
+            
         }      
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void updateText(){
+        jTextArea1.setText(BlockChain.toString());
+
+        votos.clear();
+    }
     
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
@@ -570,7 +573,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField3;
     private java.awt.Label label1;

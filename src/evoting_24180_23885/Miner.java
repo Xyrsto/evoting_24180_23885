@@ -3,17 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package evoting_24180_23885;
-import evoting_24180_23885.Hash;
 import java.security.MessageDigest;
 import java.util.Base64;
 import javax.swing.JLabel;
 import javax.swing.SwingWorker;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 /**
@@ -30,9 +26,10 @@ public class Miner extends SwingWorker<Integer, String>{
     private String zeros;
     private volatile int result = -1;
     private int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
-    
-            
-    private JLabel label;
+    public MiningWindow ver = new MiningWindow();
+    public int nonceP;
+    public BlockChain blockchain;
+    public MainScreen mainWindow;
     
     
     /**
@@ -43,13 +40,14 @@ public class Miner extends SwingWorker<Integer, String>{
      * @param difficulty A dificuldade da mineração (número de zeros no hash).
      * @param label O rótulo onde o hash mais recente será exibido.
      */
-    public Miner(int startNonce, int threadId, String data, int difficulty, JLabel label) {
+    public Miner(int startNonce, int threadId, String data, int difficulty, BlockChain bc, MainScreen mw) {
         this.startNonce = startNonce;
         this.threadId = threadId;
         this.data = data;
         this.difficulty = difficulty;
         this.zeros = String.format("%0" + difficulty + "d", 0);
-        this.label = label;
+        blockchain = bc;
+        mainWindow = mw;
     }
     
 //    /**
@@ -82,6 +80,10 @@ public class Miner extends SwingWorker<Integer, String>{
      */
     @Override 
     protected Integer doInBackground() {
+        
+        ver.setVisible(true);
+        
+        
         AtomicInteger result = new AtomicInteger(-1);
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
         //CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
@@ -121,8 +123,13 @@ public class Miner extends SwingWorker<Integer, String>{
                 String hash =  Base64.getEncoder().encodeToString(hasher.digest());
                 publish(hash);
                 if (hash.startsWith(zeros)) {
+                    nonceP = nonce;
                     result.set(nonce);
+                    ver.progressText.append("Hash : " + hash + "nonce: " + nonce + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                     System.out.println("Thread " + Thread.currentThread().getName() + "encontrou o nonce " + nonce);
+                    blockchain.addBloco(nonceP);
+                    mainWindow.updateText();
+                    System.out.println("A MERDA DO PROGRAM FUNCIONA");                    
                     return;
                 }
                 nonce += THREAD_COUNT; // Increment by the number of threads to distribute work evenly
@@ -139,15 +146,7 @@ public class Miner extends SwingWorker<Integer, String>{
      * @param chunks Uma lista de valores de Nonce intermediários.
      */
     protected void process(List<String> chunks){
-        label.setText((chunks.getLast() + data));
+        ver.progressText.append(chunks.getLast() + "\n");
     }
     
-    /**
-     * Método chamado quando a tarefa do minerador está concluída.
-     * @param chain A cadeia de blocos na qual o Nonce foi inserido.
-     */
-    public void done(BlockChain chain){
-        
-        System.out.println("done");
-    }
 }

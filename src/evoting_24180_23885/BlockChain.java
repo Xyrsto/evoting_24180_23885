@@ -7,10 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
-import evoting_24180_23885.Miner;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -22,7 +19,8 @@ import javax.swing.SwingWorker;
 public class BlockChain {
     ArrayList<Block> chain = new ArrayList<>();
     public JLabel jlabel = new JLabel();
-    
+    public String dataP;
+    public MainScreen mainWindow;
     /**
      * gets the last hash of the blockchain
      * @returns last hash of the blockchain
@@ -37,6 +35,11 @@ public class BlockChain {
         return chain.get(chain.size() - 1).currentHash;
     }
     
+    public BlockChain(MainScreen mw)
+    {
+        mainWindow = mw;
+    }
+    
     /**
      * adds data to the blockchain
      * @param data
@@ -45,7 +48,8 @@ public class BlockChain {
     public void add(String data, int difficulty){
         //previous block's hash
         String previousHash = getLastHash();
-        SwingWorker<Integer,String> mineiro = new Miner(0,0, previousHash + data, difficulty, jlabel);
+        SwingWorker<Integer,String> mineiro = new Miner(0,0, previousHash + data, difficulty, this, mainWindow);
+        dataP = data;
         
         //mines the nonce value for the block
         int nonce = 0;      
@@ -56,8 +60,12 @@ public class BlockChain {
             Logger.getLogger(BlockChain.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        
+    }
+    
+    public void addBloco(int nonce){
         //builds the new block
-        Block newBlock = new Block(previousHash, data, nonce);
+        Block newBlock = new Block(getLastHash(), dataP, nonce);
         
         //adds the new block to the blockchain
         chain.add(newBlock);
