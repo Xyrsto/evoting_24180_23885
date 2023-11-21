@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package evoting_24180_23885;
+
 import evoting_24180_23885.MainScreen;
+
 /**
- *
- * @author rodri
+ * Main method.
  */
 public class Evoting_24180_23885 {
 
@@ -17,9 +18,7 @@ public class Evoting_24180_23885 {
         // TODO code application logic here
         MainScreen mainScreen = new MainScreen();
         mainScreen.setVisible(true);
-        
-        
-        
+
     }
-    
+
 }

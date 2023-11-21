@@ -36,19 +36,37 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author rodri
+ * Ecrã principal da aplicação
  */
 public class MainScreen extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     public boolean isAuthenticated;
+
+    /**
+     *
+     */
     public Eleitor loggedUser;
+
+    /**
+     *
+     */
     public boolean userHasVoted;
     BlockChain BlockChain = new BlockChain(this);
     HashMap<String, String> allVotes = new HashMap();
     ArrayList<Object> votos = new ArrayList<>();
     ArrayList<Object> dataTree = new ArrayList<>();
+
+    /**
+     *
+     */
     public ArrayList<Object> eleitoresList = new ArrayList<>();
+
+    /**
+     *
+     */
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     private final int DIFFICULTY = 2;
 
@@ -306,6 +324,7 @@ public class MainScreen extends javax.swing.JFrame {
     /**
      * Verifica se um utilizador está autenticado ou não, dando valor true à variável isAuthenticated caso esteja.
      *
+     * @return 
      */
     public boolean setAuth() {
         return isAuthenticated = true;
@@ -440,6 +459,9 @@ public class MainScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     *
+     */
     public void updateText() {
         jTextArea1.setText(BlockChain.toString());
         votos.clear();
