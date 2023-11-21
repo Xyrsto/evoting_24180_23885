@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JavaApplication6/JavaApplication6.iml" filepath="$PROJECT_DIR$/JavaApplication6/JavaApplication6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/evoting_24180_23885.iml" filepath="$PROJECT_DIR$/evoting_24180_23885.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaWebTest/javaWebTest.iml" filepath="$PROJECT_DIR$/javaWebTest/javaWebTest.iml" />
+    </modules>
+  </component>
+</project>

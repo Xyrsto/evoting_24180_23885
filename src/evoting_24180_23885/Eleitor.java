@@ -4,11 +4,17 @@
  */
 package evoting_24180_23885;
 
+import evoting_24180_23885.SecurityUtils.Assimetric;
+import evoting_24180_23885.SecurityUtils.Simetric;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.security.PublicKey;
+import java.util.HashMap;
 
 /**
  *
@@ -69,9 +75,20 @@ public class Eleitor implements Serializable{
     }
     
     
-    //public 
-
-    public static boolean getHasVoted() {
-        return hasVoted;
+    public boolean getHasVoted(HashMap<String, String> hashMap) throws IOException, Exception {        
+        String hashedUser = Hash.getHash(this.numCC);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(hashedUser);
+        oos.close(); // Close the ObjectOutputStream
+        byte[] serializedUser = baos.toByteArray(); // Get the serialized data as a byte array
+        PublicKey pubKey = Assimetric.getPublicKey("keys/USER" + this.numCC + ".pubkey");
+        byte[] encrypted = Simetric.encrypt(serializedUser, pubKey);
+                
+        if(hashMap.containsValue(encrypted)){
+            return true;
+        }
+        
+        return false;
     }
 }

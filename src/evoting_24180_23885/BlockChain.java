@@ -40,6 +40,10 @@ public class BlockChain {
         mainWindow = mw;
     }
     
+    public BlockChain(){
+        
+    }
+    
     /**
      * adds data to the blockchain
      * @param data
