@@ -17,71 +17,91 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
- *
- * @author rodri
+ * A classe Users fornece métodos para registar utilizadores e autenticar
+ * utilizadores registados. Utiliza chaves assimétricas, criptografia de senha,
+ * assinatura digital e chaves simétricas para garantir segurança.
  */
 public class Users {
-    public static void register(String numCC, String password) throws Exception{
+
+    /**
+     * Regista um utilizador gerando e armazenando chaves assimétricas,
+     * assinatura digital e uma chave simétrica.
+     *
+     * @param numCC Número do Cartão de Cidadão do utilizador.
+     * @param password Palavra-passe do utilizador.
+     * @throws Exception Lança uma exceção se ocorrer um erro durante o registo.
+     */
+    public static void register(String numCC, String password) throws Exception {
         String regex = "\\d{8}";
-        if(!numCC.matches(regex)){
+        if (!numCC.matches(regex)) {
             return;
         }
         //gerar chaves
         KeyPair keyPair = Assimetric.generateKeyPair(2048);
-        
+
         //guardar a chave pública
         Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
-        
+
         //salvar chave privada com password 
         byte[] encryptedPrivate = PasswordBasedEncryption.encrypt(keyPair.getPrivate().getEncoded(), password);
         //isto não funciona -> Files.write("keys/USER" + numCC + ".privkey", encryptedPrivate);       
-        try(FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")){
+        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")) {
             fos.write(encryptedPrivate);
         }
-        
+
         //assinar registo
         byte[] registo = (numCC + password).getBytes();
         byte[] assinatura = AssinaturaDigital.signature(registo, keyPair.getPrivate());
-        
+
         //guardar assinatura
-        try(FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")){
+        try (FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")) {
             fos.write(assinatura);
         }
-        
+
         //gerar e guardar chave simétrica
         Key simetric = Simetric.generateAESKey(128);
         byte[] encryptedSimetric = Simetric.encrypt(simetric.getEncoded(), keyPair.getPublic());
-        try(FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")){
+        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
             fos.write(encryptedSimetric);
-        }      
+        }
     }
-    
-    public static boolean authenticate(String numCC, String password) throws Exception{  
+
+    /**
+     * Autentica um utilizador comparando a assinatura digital e verificando a
+     * integridade dos dados.
+     *
+     * @param numCC Número do Cartão de Cidadão do utilizador.
+     * @param password Palavra-passe do utilizador.
+     * @return Retorna verdadeiro se a autenticação for bem-sucedida, falso caso
+     * contrário.
+     * @throws Exception Lança uma exceção se ocorrer um erro durante a
+     * autenticação.
+     */
+    public static boolean authenticate(String numCC, String password) throws Exception {
         //chave public
         PublicKey publicKey = Assimetric.getPublicKey("keys/USER" + numCC + ".pubkey");
-        
+
         //chave privada
         byte[] encryptedPrivateKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".privkey"));
         PrivateKey privateKey = Assimetric.getPrivateKey(PasswordBasedEncryption.decrypt(encryptedPrivateKey, password));
-        
+
         //chave simétrica
         byte[] encryptedSimetricKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".sim"));
         Key simetricKey = Simetric.getAESKey(Simetric.decrypt(encryptedSimetricKey, privateKey));
-        
+
         //assinatura
         byte[] assinatura = Files.readAllBytes(Paths.get("assinaturas/USER" + numCC + ".sig"));
-        
+
         //dados do registo
         byte[] data = (numCC + password).getBytes();
-        
+
         //verificar assinatura
         boolean validSignature = AssinaturaDigital.verify(data, assinatura, publicKey);
-        
-        if(validSignature){
+
+        if (validSignature) {
             System.out.println("SUCESSO");
             return true;
-        }
-        else{
+        } else {
             System.out.println("FALHA NA AUTENTICAÇÂO");
             return false;
         }

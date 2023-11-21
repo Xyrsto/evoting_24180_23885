@@ -11,10 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author rodri
+ * A classe {@code Hash} fornece métodos para calcular o hash de dados usando o
+ * algoritmo SHA3-256. Esta classe utiliza uma instância de MessageDigest para
+ * realizar a operação de hash.
  */
 public class Hash {
+
     private static MessageDigest hasher = null;
 
     static {
@@ -24,19 +26,26 @@ public class Hash {
             Logger.getLogger(Miner.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /**
-     * @param n
-     * @returns the Integer value of the integer parameter n to Hex, uppercasing it 
+     * Converte um número inteiro para sua representação hexadecimal em letras
+     * maiúsculas.
+     *
+     * @param n O número inteiro a ser convertido.
+     * @return A representação hexadecimal em letras maiúsculas do número
+     * inteiro.
      */
-    public static String toHexString(int n){
+    public static String toHexString(int n) {
         return Integer.toHexString(n).toUpperCase();
     }
-    
+
     /**
-     * @param data
-     * @returns the hex value of the hashed parameter data 
+     * Calcula o hash de uma string utilizando o algoritmo SHA3-256.
+     *
+     * @param data A string a ser hash.
+     * @return O valor hash em Base64 da string fornecida.
      */
-    public static String getHash(String data){
+    public static String getHash(String data) {
         hasher.reset();
         hasher.update(data.getBytes());
         return Base64.getEncoder().encodeToString(hasher.digest());

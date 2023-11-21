@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Rodrigo Serra, Rúben Cardoso
  */
 public class Miner extends SwingWorker<Integer, String>{
-    //maximum number of Nonce
     public static int MAX_NONCE = (int) 1E9;
     private int startNonce;
     private int threadId;
@@ -38,7 +37,8 @@ public class Miner extends SwingWorker<Integer, String>{
      * @param threadId O identificador da thread.
      * @param data Os dados a serem usados na mineração.
      * @param difficulty A dificuldade da mineração (número de zeros no hash).
-     * @param label O rótulo onde o hash mais recente será exibido.
+     * @param bc A cadeia de blocos a ser atualizada após a mineração.
+     * @param mw A tela principal que será atualizada após a mineração.
      */
     public Miner(int startNonce, int threadId, String data, int difficulty, BlockChain bc, MainScreen mw) {
         this.startNonce = startNonce;
@@ -50,52 +50,22 @@ public class Miner extends SwingWorker<Integer, String>{
         mainWindow = mw;
     }
     
-//    /**
-//     *
-//     * @throws Exception
-//     */
-//    @Override
-//    protected Integer doInBackground() {
-//        int cores = Runtime.getRuntime().availableProcessors();
-//        int nonce = startNonce;
-//        while (nonce < MAX_NONCE && result == -1) { 
-//            String hash = Hash.getHash(nonce + data);
-//
-//            publish(nonce);
-//            if (hash.endsWith(zeros)) {
-//                result = nonce;
-//                return result;
-//            }
-//            nonce += 1; // Increment by the number of threads to distribute work evenly
-//        }
-//
-//        return result;
-//    }
-    
-    
     /**
-     * Método doInBackground()
-     * Método de mineração de Nonces 
-     * @return result 
+     * Método doInBackground().
+     * Método de mineração de Nonces.
+     * @return O resultado da mineração.
      */
     @Override 
-    protected Integer doInBackground() {
-        
-        ver.setVisible(true);
-        
-        
+    protected Integer doInBackground() {        
+        ver.setVisible(true);           
         AtomicInteger result = new AtomicInteger(-1);
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
-        //CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
         try {
             for (int i = 0; i < THREAD_COUNT; i++) {
                 int threadNonce = i; // Distribute work evenly among threads
                 executor.submit(() -> mineNonce(threadNonce, data, result));
             }
-
-            // Wait for all threads to complete
             executor.awaitTermination(1, TimeUnit.HOURS);
-
             return result.get();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,13 +75,12 @@ public class Miner extends SwingWorker<Integer, String>{
 
         return result.get();
     }
-    
-    
+        
     /**
-     * Método que vai minar o nonce dentro do método doInBackground
+     * Método que realiza a mineração do Nonce durante o método doInBackground.
      * @param startNonce O Nonce inicial a ser minerado por esta thread.
      * @param data Os dados a serem usados na mineração.
-     * @param result é o resultado a ser devolvido depois de ser minado
+     * @param result O resultado a ser devolvido após a mineração.
      */
     private void mineNonce(int startNonce, String data, AtomicInteger result) {
         int nonce = startNonce;
@@ -129,7 +98,6 @@ public class Miner extends SwingWorker<Integer, String>{
                     System.out.println("Thread " + Thread.currentThread().getName() + "encontrou o nonce " + nonce);
                     blockchain.addBloco(nonceP);
                     mainWindow.updateText();
-                    System.out.println("A MERDA DO PROGRAM FUNCIONA");                    
                     return;
                 }
                 nonce += THREAD_COUNT; // Increment by the number of threads to distribute work evenly
@@ -142,7 +110,7 @@ public class Miner extends SwingWorker<Integer, String>{
     
     
     /**
-     * Processa os valores intermediários da mineração e atualiza o rótulo.
+     * Processa os valores intermediários da mineração e atualiza a janela de mineração.
      * @param chunks Uma lista de valores de Nonce intermediários.
      */
     protected void process(List<String> chunks){

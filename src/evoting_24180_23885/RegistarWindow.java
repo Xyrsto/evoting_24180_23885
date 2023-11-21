@@ -17,15 +17,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- *
- * @author rodri
+ * Janela de Registo que permite aos eleitores registarem-se no sistema. Esta
+ * janela é utilizada para inserir o número do cartão de cidadão e a
+ * palavra-passe do eleitor. Os eleitores são então registados no sistema e as
+ * suas informações são guardadas numa blockchain.
  */
 public class RegistarWindow extends javax.swing.JFrame {
-    public MainScreen mainWindow ;
+
+    public MainScreen mainWindow;
     private BlockChain eleitoresChain = new BlockChain();
     public ArrayList<Object> list = new ArrayList<>();
     private final int DIFFICULTY = 5;
-    //private final int SIZEELEITORES = mainWindow.eleitoresList.size();
+
     /**
      * Creates new form LoginWindow
      */
@@ -102,9 +105,9 @@ public class RegistarWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
+        try {
             String regex = "\\d{8}";
-            if(!CCField.getText().matches(regex)){
+            if (!CCField.getText().matches(regex)) {
                 CCField.setText("Só pode conter 8 números");
                 return;
             }
@@ -113,10 +116,9 @@ public class RegistarWindow extends javax.swing.JFrame {
             Eleitor.saveVote(CCField.getText());
             mainWindow.eleitoresList.add(newEleitor);
             saveEleitor(mainWindow.eleitoresList);
-            
-            if(mainWindow.eleitoresList.size() <= 10){
-                if(mainWindow.eleitoresList.size() < 10)
-                {              
+
+            if (mainWindow.eleitoresList.size() <= 10) {
+                if (mainWindow.eleitoresList.size() < 10) {
                     return;
                 }
                 //builds a merkle tree with whats added on the elements.
@@ -127,32 +129,35 @@ public class RegistarWindow extends javax.swing.JFrame {
 
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-                try (FileOutputStream fos = new FileOutputStream("eleitores/eleitoresList" + merkleTree.getRoot() + ".obj");
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);) {
-                oos.writeObject(list);
+                try (FileOutputStream fos = new FileOutputStream("eleitores/eleitoresList" + merkleTree.getRoot() + ".obj"); ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+                    oos.writeObject(list);
 
                 } catch (Exception e) {
-                        System.out.println("erro");
-                  throw new RuntimeException(e);
+                    System.out.println("erro");
+                    throw new RuntimeException(e);
                 }
                 eleitoresChain.add(merkleTree.getRoot(), DIFFICULTY);
                 eleitoresChain.save("Blockchains/eleitoresBlockChain.obj");
-                list.clear();                   
+                list.clear();
             }
-        }catch(Exception err){
+        } catch (Exception err) {
             System.out.println(err.toString());
-        }       
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void saveEleitor(ArrayList<Object> eleitores){
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitores/eleitoresList.list"))){
+    /**
+     * Guarda as informações do eleitor num arquivo.
+     *
+     * @param eleitores A lista de eleitores.
+     */
+    public void saveEleitor(ArrayList<Object> eleitores) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitores/eleitoresList.list"))) {
             oos.writeObject(eleitores);
-        }
-        catch(Exception err){
+        } catch (Exception err) {
             System.out.println(err.toString());
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

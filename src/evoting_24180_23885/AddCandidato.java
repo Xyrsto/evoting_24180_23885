@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
- *
- * @author rodri
+ * A classe {@code AddCandidato} representa a interface gráfica para adicionar novos candidatos
+ * no sistema de voto eletrónico. Requer autenticação de administrador para validar a ação.
  */
 public class AddCandidato extends javax.swing.JFrame {
 
@@ -28,7 +28,8 @@ public class AddCandidato extends javax.swing.JFrame {
     private final int DIFFICULTY = 5;
     
     /**
-     * Creates new form VerWindow
+     * Cria uma nova instância da classe {@code AddCandidato}.
+     * Inicializa a interface gráfica e define o comportamento de fechar a janela.
      */
     public AddCandidato() {
         initComponents();
@@ -118,19 +119,16 @@ public class AddCandidato extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * Inicializa os componentes da interface gráfica. Este método é gerado automaticamente
+     * e não deve ser modificado manualmente.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
             if(AdminUser.getText().equals("admin") && Users.authenticate(AdminUser.getText(), AdminPassword.getText()))
             {
                 
                 Candidato newCand = new Candidato(jTextField1.getText());
-                
-//                try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Partidos/" + newCand.getNome() + ".partido"))){
-//                    oos.writeObject(newCand);
-//                }
-//                catch(Exception err){
-//                    System.out.println(err.toString());
-//                }
                 
                 mainWindow.updateCandidatos(newCand);
                 dispose();

@@ -4,20 +4,18 @@ package evoting_24180_23885;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
- *
- * @author nuttell
+ * Janela de Mineração que exibe o progresso da mineração. Esta janela é
+ * utilizada para mostrar os resultados da mineração de Nonce.
  */
 public class MiningWindow extends javax.swing.JFrame {
-    
-    
-    
+
     /**
-     * Creates new form MiningWindow
+     * Cria uma nova instância da classe MiningWindow.
      */
     public MiningWindow() {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 

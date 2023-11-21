@@ -5,13 +5,16 @@
 package evoting_24180_23885;
 
 /**
- *
- * @author rodri
+ * A classe {@code LoginWindow} representa a janela de login do sistema de
+ * votação. Permite que os eleitores insiram o número do cartão de cidadão e a
+ * senha para autenticação.
  */
 public class LoginWindow extends javax.swing.JFrame {
+
     public MainScreen mainWindow;
+
     /**
-     * Creates new form LoginWindow
+     * Cria uma nova instância da janela de login.
      */
     public LoginWindow() {
         initComponents();
@@ -90,18 +93,23 @@ public class LoginWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método chamado quando o botão de login é pressionado. Verifica as
+     * credenciais inseridas e autentica o eleitor no sistema.
+     *
+     * @param evt O evento de ação associado ao botão.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-            if(Users.authenticate(CCField.getText(), PasswordField.getText())){
+        try {
+            if (Users.authenticate(CCField.getText(), PasswordField.getText())) {
                 mainWindow.setAuth();
                 mainWindow.getLoggedUser(CCField.getText(), PasswordField.getText());
                 dispose();
             }
-        }
-        catch(Exception err){
+        } catch (Exception err) {
             System.out.println(err.toString());
-        }        
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
