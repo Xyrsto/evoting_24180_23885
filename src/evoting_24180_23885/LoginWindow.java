@@ -11,6 +11,9 @@ package evoting_24180_23885;
  */
 public class LoginWindow extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     public MainScreen mainWindow;
 
     /**

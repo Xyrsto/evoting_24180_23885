@@ -21,9 +21,21 @@ import java.util.ArrayList;
 public class AddCandidato extends javax.swing.JFrame {
 
     // Referencia à mainWindow
+
+    /**
+     *
+     */
     public MainScreen mainWindow ;
+
+    /**
+     *
+     */
     public boolean adminAuth;
     private BlockChain candidatosChain = new BlockChain();
+
+    /**
+     *
+     */
     public ArrayList<Object> list = new ArrayList<>();
     private final int DIFFICULTY = 5;
     

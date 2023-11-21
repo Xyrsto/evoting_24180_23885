@@ -54,27 +54,58 @@ public class Simetric
 {
     private String input;
 
+    /**
+     *
+     * @param input
+     */
     public Simetric(String input) 
     {
         this.input = input;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getInput() {
         return input;
     }
 
+    /**
+     *
+     * @param input
+     */
     public void setInput(String input) {
         this.input = input;
     }
     
+    /**
+     *
+     * @param keySize
+     * @return
+     * @throws Exception
+     */
     public static Key generateAESKey(int keySize) throws Exception{
         return generateAESKey(keySize, "SunJCE");
     }
     
+    /**
+     *
+     * @param keySize
+     * @return
+     * @throws Exception
+     */
     public static Key generateBlowfishKey(int keySize) throws Exception{
         return generateBlowfishKey(keySize, "SunJCE");
     }
     
+    /**
+     *
+     * @param keySize
+     * @param provider
+     * @return
+     * @throws Exception
+     */
     public static Key generateAESKey(int keySize, String provider)throws Exception{
         //gerador de keys
         KeyGenerator keyGen = KeyGenerator.getInstance("AES",provider);
@@ -87,6 +118,13 @@ public class Simetric
         return key;
     }
     
+    /**
+     *
+     * @param keySize
+     * @param provider
+     * @return
+     * @throws Exception
+     */
     public static Key generateBlowfishKey(int keySize, String provider)throws Exception{
         //gerador de keys
         KeyGenerator keyGen = KeyGenerator.getInstance("Blowfish",provider);
@@ -99,6 +137,13 @@ public class Simetric
         return key;
     }
     
+    /**
+     *
+     * @param data
+     * @param key
+     * @return
+     * @throws Exception
+     */
     public static byte[] encrypt(byte[] data, Key key) throws Exception{
         //cria um objeto do tipo cifragem de chave
         Cipher cipher = Cipher.getInstance(key.getAlgorithm());
@@ -110,6 +155,13 @@ public class Simetric
         return cipher.doFinal(data);
     }
     
+    /**
+     *
+     * @param data
+     * @param key
+     * @return
+     * @throws Exception
+     */
     public static byte[] decrypt(byte[] data, Key key)throws Exception{
         //cria um objeto do tipo cifragem de chave
         Cipher cipher = Cipher.getInstance(key.getAlgorithm());
@@ -121,11 +173,24 @@ public class Simetric
         return cipher.doFinal(data);
     }
     
+    /**
+     *
+     * @param key
+     * @param num
+     * @throws Exception
+     */
     public static void saveKey(Key key, String num) throws Exception{
         //Timestamp time = new Timestamp(System.currentTimeMillis());
         Files.write(Paths.get("keys/USER" + num + ".sim"), key.getEncoded());
     }
     
+    /**
+     *
+     * @param keyName
+     * @param algoritmo
+     * @return
+     * @throws Exception
+     */
     public static Key loadKey(String keyName, String algoritmo) throws Exception{
         // TODO add your handling code here:
         byte[] encoded = Files.readAllBytes(Paths.get(keyName));
@@ -133,6 +198,11 @@ public class Simetric
         return key;
     }
     
+    /**
+     *
+     * @param key
+     * @return
+     */
     public static Key getAESKey(byte[] key) {
         return new SecretKeySpec(key, "AES");
     }

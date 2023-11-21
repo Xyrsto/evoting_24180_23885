@@ -14,7 +14,14 @@ import java.io.Serializable;
  */
 public class Candidato implements Serializable {
 
+    /**
+     *
+     */
     public String nome;
+
+    /**
+     *
+     */
     public int numeroVotos;
 
     /**

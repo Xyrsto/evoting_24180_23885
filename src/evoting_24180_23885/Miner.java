@@ -17,6 +17,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Rodrigo Serra, Rúben Cardoso
  */
 public class Miner extends SwingWorker<Integer, String>{
+
+    /**
+     *
+     */
     public static int MAX_NONCE = (int) 1E9;
     private int startNonce;
     private int threadId;
@@ -25,9 +29,25 @@ public class Miner extends SwingWorker<Integer, String>{
     private String zeros;
     private volatile int result = -1;
     private int THREAD_COUNT = Runtime.getRuntime().availableProcessors();
+
+    /**
+     *
+     */
     public MiningWindow ver = new MiningWindow();
+
+    /**
+     *
+     */
     public int nonceP;
+
+    /**
+     *
+     */
     public BlockChain blockchain;
+
+    /**
+     *
+     */
     public MainScreen mainWindow;
     
     

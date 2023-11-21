@@ -53,18 +53,36 @@ import javax.swing.JOptionPane;
 public class Assimetric {
     String data;
     
+    /**
+     *
+     * @param data
+     */
     public Assimetric(String data){
         this.data = data;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getData() {
         return data;
     }
 
+    /**
+     *
+     * @param data
+     */
     public void setData(String data) {
         this.data = data;
     }
     
+    /**
+     *
+     * @param size
+     * @return
+     * @throws Exception
+     */
     public static KeyPair generateKeyPair(int size) throws Exception{
         System.out.println("Generating RSA key pair...");
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
@@ -72,10 +90,22 @@ public class Assimetric {
         return keyGen.generateKeyPair();
     }
     
+    /**
+     *
+     * @param key
+     * @param filePath
+     * @throws Exception
+     */
     public static void saveKey(Key key, String filePath) throws Exception{
         Files.write(Paths.get(filePath), key.getEncoded());
     }
     
+    /**
+     *
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
     public static PublicKey getPublicKey(String filePath) throws Exception{
         //ler ficheiro 
         byte[] data = Files.readAllBytes(Paths.get(filePath));
@@ -89,6 +119,12 @@ public class Assimetric {
         return keyFactory.generatePublic(pubSpec);
     }
     
+    /**
+     *
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
     public static PrivateKey getPrivateKey(String filePath) throws Exception{
         //ler ficheiro
         byte[] data = Files.readAllBytes(Paths.get(filePath));
@@ -97,6 +133,12 @@ public class Assimetric {
         return keyFactory.generatePrivate(privSpec);
     }
     
+    /**
+     *
+     * @param privData
+     * @return
+     * @throws Exception
+     */
     public static PrivateKey getPrivateKey(byte[] privData) throws Exception {
         //especificações da chave privada PKCS8
         PKCS8EncodedKeySpec privSpec = new PKCS8EncodedKeySpec(privData);

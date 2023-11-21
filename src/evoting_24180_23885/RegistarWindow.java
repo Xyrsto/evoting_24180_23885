@@ -24,8 +24,15 @@ import java.util.ArrayList;
  */
 public class RegistarWindow extends javax.swing.JFrame {
 
+    /**
+     *
+     */
     public MainScreen mainWindow;
     private BlockChain eleitoresChain = new BlockChain();
+
+    /**
+     *
+     */
     public ArrayList<Object> list = new ArrayList<>();
     private final int DIFFICULTY = 5;
 
