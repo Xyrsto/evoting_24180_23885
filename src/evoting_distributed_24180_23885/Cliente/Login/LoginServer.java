@@ -20,7 +20,7 @@ public class LoginServer extends javax.swing.JFrame {
 
     RemoteLoginInterface myRemote;
     public static final String remoteName = "RemoteLogin";
-    public static final int remotePort = 10_010;
+    public static int remotePort;
 
     public LoginServer() {
         initComponents();
@@ -179,6 +179,7 @@ public class LoginServer extends javax.swing.JFrame {
         //create object  to listen in the remote port
 
         try {
+            remotePort = (int) spMyServerPort.getValue();
             RemoteLoginObject helloWorld = new RemoteLoginObject(remotePort);
             //local adress of server
             String host = InetAddress.getLocalHost().getHostAddress();

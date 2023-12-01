@@ -21,6 +21,7 @@ import utils.RMI;
  * @author rodri
  */
 public class LoginScreen extends javax.swing.JFrame {
+
     String loggedUser;
     private MainScreen mainScreen;
 
@@ -53,6 +54,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         passwordTextArea = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,14 +73,17 @@ public class LoginScreen extends javax.swing.JFrame {
 
         passwordTextArea.setText("Password");
 
+        jButton2.setText("Registar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(169, 169, 169))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -92,6 +97,12 @@ public class LoginScreen extends javax.swing.JFrame {
                             .addComponent(passwordTextArea)
                             .addComponent(jLabel2))))
                 .addContainerGap(118, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(166, 166, 166))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +119,9 @@ public class LoginScreen extends javax.swing.JFrame {
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(34, 34, 34))
+                .addGap(1, 1, 1)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -116,7 +129,8 @@ public class LoginScreen extends javax.swing.JFrame {
 
     /**
      * Botão para fazer login de um utilizador.
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -126,19 +140,40 @@ public class LoginScreen extends javax.swing.JFrame {
             RemoteLoginInterface remoteLogin = (RemoteLoginInterface) Naming.lookup(remoteObject);
             loggedUser = remoteLogin.loginUser(numCCTextArea.getText(), jPasswordField1.getText());
             System.out.println(loggedUser);
-            
+
             if (loggedUser != null) {
-            // Close the LoginScreen
-            this.dispose();
-            
-            // Open the MainScreen with the logged-in user
-            mainScreen.setLoggedUser(loggedUser);
-            mainScreen.setVisible(true);
-        }
+                // Close the LoginScreen
+                this.dispose();
+
+                // Open the MainScreen with the logged-in user
+                mainScreen.setLoggedUser(loggedUser);
+                mainScreen.setVisible(true);
+            }
         } catch (Exception err) {
             err.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String host = "192.168.68.100";
+        String remoteObject = String.format("//%s:%d/%s", host, LoginServer.remotePort, LoginServer.remoteName);
+        try {
+            RemoteLoginInterface remoteRegister = (RemoteLoginInterface) Naming.lookup(remoteObject);
+            remoteRegister.registerUser(numCCTextArea.getText(), jPasswordField1.getText());
+
+            if (loggedUser != null) {
+                // Close the LoginScreen
+                this.dispose();
+
+                // Open the MainScreen with the logged-in user
+                mainScreen.setLoggedUser(loggedUser);
+                mainScreen.setVisible(true);
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +219,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField1;
