@@ -1,40 +1,35 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package evoting_24180_23885;
+package evoting_distributed_24180_23885.Cliente.MainScreen;
 
-import evoting_24180_23885.SecurityUtils.Assimetric;
-import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.Key;
-import java.sql.Timestamp;
+import evoting_24180_23885.*;
 import java.util.ArrayList;
 
 /**
- * A classe {@code AddCandidato} representa a interface gráfica para adicionar novos candidatos
- * no sistema de voto eletrónico. Requer autenticação de administrador para validar a ação.
+ * A classe {@code AddCandidato} representa a interface gráfica para adicionar
+ * novos candidatos no sistema de voto eletrónico. Requer autenticação de
+ * administrador para validar a ação.
  */
 public class AddCandidato extends javax.swing.JFrame {
 
     // Referencia à mainWindow
-    public MainScreen mainWindow ;
-    public boolean adminAuth;
-    private BlockChain candidatosChain = new BlockChain();
+    public static MainScreen mainWindow;
     public ArrayList<Object> list = new ArrayList<>();
-    private final int DIFFICULTY = 5;
-    
+    private String loggedUser;
+
     /**
-     * Cria uma nova instância da classe {@code AddCandidato}.
-     * Inicializa a interface gráfica e define o comportamento de fechar a janela.
+     * Cria uma nova instância da classe {@code AddCandidato}. Inicializa a
+     * interface gráfica e define o comportamento de fechar a janela.
      */
-    public AddCandidato() {
+    public AddCandidato(MainScreen mainWindow) {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        this.mainWindow = mainWindow;
+        loggedUser = mainWindow.getLoggedUser();
+        System.out.println(loggedUser);
     }
 
     /**
@@ -48,11 +43,8 @@ public class AddCandidato extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        AdminUser = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        AdminPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,105 +56,62 @@ public class AddCandidato extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Faça login como administrador para validar ");
-
         jLabel2.setText("Nome do candidato");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(62, Short.MAX_VALUE)
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel2)
-                        .addGap(64, 64, 64))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(74, 74, 74))
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(303, 303, 303))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(AdminUser, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                            .addComponent(AdminPassword))
-                        .addGap(10, 10, 10)))
-                .addGap(71, 71, 71))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(37, 37, 37)
+                                    .addComponent(jLabel2)
+                                    .addGap(45, 45, 45))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jButton1)
+                                .addGap(61, 61, 61)))
+                        .addGap(84, 84, 84))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AdminUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AdminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     /**
-     * Inicializa os componentes da interface gráfica. Este método é gerado automaticamente
-     * e não deve ser modificado manualmente.
+    /**
+     * Inicializa os componentes da interface gráfica. Este método é gerado
+     * automaticamente e não deve ser modificado manualmente.
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
-            if(AdminUser.getText().equals("admin") && Users.authenticate(AdminUser.getText(), AdminPassword.getText()))
-            {
-                
-                Candidato newCand = new Candidato(jTextField1.getText());
-                
-                mainWindow.updateCandidatos(newCand);
-                dispose();
-                
-                if(mainWindow.candidatos.size() <= 3){
-                    if(mainWindow.candidatos.size() < 3)
-                    {              
-                        return;
-                    }
-                    //builds a merkle tree with whats added on the elements.
-                    MerkleTreeString merkleTree = new MerkleTreeString(mainWindow.candidatos);
+        try {
+            Candidato newCand = new Candidato(jTextField1.getText());
+            mainWindow.updateCandidatos(newCand);
+            dispose();
 
-                    list.add(mainWindow.candidatos);
-                    list.add(merkleTree);
-
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-                    try (FileOutputStream fos = new FileOutputStream("Partidos/candidatosList" + merkleTree.getRoot() + ".obj");
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);) {
-                    oos.writeObject(list);
-
-                    } catch (Exception e) {
-                            System.out.println("erro");
-                      throw new RuntimeException(e);
-                    }
-                    candidatosChain.add(merkleTree.getRoot(), DIFFICULTY);
-                    candidatosChain.save("Blockchains/candidatosBlockChain.obj");
-                    list.clear();                   
-                }
-            }
-        }
-        catch(Exception err){
+        } catch (Exception err) {
             System.out.println(err.toString());
-        }      
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -194,21 +143,22 @@ public class AddCandidato extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddCandidato().setVisible(true);
+                new AddCandidato(mainWindow).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField AdminPassword;
-    private javax.swing.JTextField AdminUser;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

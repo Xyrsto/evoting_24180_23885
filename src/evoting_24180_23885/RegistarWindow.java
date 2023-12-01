@@ -113,11 +113,11 @@ public class RegistarWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String regex = "\\d{8}";
-            if (!CCField.getText().matches(regex)) {
-                CCField.setText("Só pode conter 8 números");
-                return;
-            }
+            //String regex = "\\d{8}";
+//            if (!CCField.getText().matches(regex)) {
+//                CCField.setText("Só pode conter 8 números");
+//                return;
+//            }
             Users.register(CCField.getText(), PasswordField.getText());
             Eleitor newEleitor = new Eleitor(CCField.getText(), PasswordField.getText(), false);
             Eleitor.saveVote(CCField.getText());

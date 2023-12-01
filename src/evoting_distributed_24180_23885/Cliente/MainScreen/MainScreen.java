@@ -4,12 +4,23 @@
  */
 package evoting_distributed_24180_23885.Cliente.MainScreen;
 
+import evoting_24180_23885.Candidato;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rodri
  */
 public class MainScreen extends javax.swing.JFrame {
+
     private String loggedUser;
+    public ArrayList<Candidato> candidatos = new ArrayList<>();
+    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
     /**
      * Creates new form MainScreen
      */
@@ -18,9 +29,35 @@ public class MainScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
+
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
+    }
+
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void updateCandidatos(Candidato newCand) {
+        // Adiciona o candidato à arraylist candidatos
+        for (Candidato c : candidatos) {
+            if (newCand.getNome().equals(c.getNome())) {
+                System.out.println("JÁ EXISTE");
+                return;
+            }
+        }
+        this.candidatos.add(newCand);
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Partidos/currentState.partido"))) {
+            oos.writeObject(candidatos);
+        } catch (Exception err) {
+            System.out.println(err.toString());
+        }
+
+        model.addElement(newCand.nome);
+
+        // Aplica o modelo à combo box
+        jComboBox1.setModel(model);
     }
 
     /**
@@ -35,45 +72,82 @@ public class MainScreen extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Votar");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel1.setText("Candidato");
 
-        jLabel1.setText("Partido");
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jMenu1.setText("Adicionar Candidato");
+        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu1MenuSelected(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(177, 177, 177)
+                        .addGap(38, 38, 38)
                         .addComponent(jButton1)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(108, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(110, 110, 110))
+                .addContainerGap(251, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+        // TODO add your handling code here:
+        if (loggedUser != "admin") {
+            JOptionPane.showMessageDialog(this,
+                    "Precisa de ser administrador para adicionar candidatos",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        AddCandidato ver = new AddCandidato(this);
+        ver.setVisible(true);
+        ver.setAlwaysOnTop(true);
+        ver.mainWindow = this;
+    }//GEN-LAST:event_jMenu1MenuSelected
 
     /**
      * @param args the command line arguments
@@ -110,9 +184,14 @@ public class MainScreen extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

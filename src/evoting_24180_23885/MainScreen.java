@@ -3,35 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package evoting_24180_23885;
-
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import evoting_24180_23885.Voto;
 import evoting_24180_23885.AddCandidato;
 import evoting_24180_23885.SecurityUtils.Assimetric;
-import evoting_24180_23885.SecurityUtils.AssinaturaDigital;
-import evoting_24180_23885.SecurityUtils.PasswordBasedEncryption;
 import evoting_24180_23885.SecurityUtils.Simetric;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.Key;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -39,34 +25,14 @@ import javax.swing.JOptionPane;
  * Ecrã principal da aplicação
  */
 public class MainScreen extends javax.swing.JFrame {
-
-    /**
-     *
-     */
     public boolean isAuthenticated;
-
-    /**
-     *
-     */
     public Eleitor loggedUser;
-
-    /**
-     *
-     */
     public boolean userHasVoted;
     BlockChain BlockChain = new BlockChain(this);
     HashMap<String, String> allVotes = new HashMap();
     ArrayList<Object> votos = new ArrayList<>();
     ArrayList<Object> dataTree = new ArrayList<>();
-
-    /**
-     *
-     */
     public ArrayList<Object> eleitoresList = new ArrayList<>();
-
-    /**
-     *
-     */
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     private final int DIFFICULTY = 2;
 

@@ -32,10 +32,10 @@ public class Users {
      * @throws Exception Lança uma exceção se ocorrer um erro durante o registo.
      */
     public static void register(String numCC, String password) throws Exception {
-        String regex = "\\d{8}";
-        if (!numCC.matches(regex)) {
-            return;
-        }
+//        String regex = "\\d{8}";
+//        if (!numCC.matches(regex)) {
+//            return;
+//        }
         //gerar chaves
         KeyPair keyPair = Assimetric.generateKeyPair(2048);
 
