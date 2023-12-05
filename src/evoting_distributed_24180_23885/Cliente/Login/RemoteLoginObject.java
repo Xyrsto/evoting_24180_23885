@@ -6,6 +6,7 @@ package evoting_distributed_24180_23885.Cliente.Login;
 
 import evoting_24180_23885.SecurityUtils.*;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
@@ -61,48 +62,46 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
      * processo de autenticação.
      */
     @Override
-    public String loginUser(String numCC, String password) throws RemoteException{
-//        String client = "";
-//        try {
-//            //nome do cliente
-//            client = RemoteServer.getClientHost();
-//            System.out.println("Message to " + client);
-//
-//            //chave public
-//            PublicKey publicKey = Assimetric.getPublicKey("keys/USER" + numCC + ".pubkey");
-//
-//            //chave privada
-//            byte[] encryptedPrivateKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".privkey"));
-//            PrivateKey privateKey = Assimetric.getPrivateKey(PasswordBasedEncryption.decrypt(encryptedPrivateKey, password));
-//
-//            //chave simétrica
-//            byte[] encryptedSimetricKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".sim"));
-//            Key simetricKey = Simetric.getAESKey(Simetric.decrypt(encryptedSimetricKey, privateKey));
-//
-//            //assinatura
-//            byte[] assinatura = Files.readAllBytes(Paths.get("assinaturas/USER" + numCC + ".sig"));
-//
-//            //dados do registo
-//            byte[] data = (numCC + password).getBytes();
-//
-//            //verificar assinatura
-//            boolean validSignature = AssinaturaDigital.verify(data, assinatura, publicKey);
-//
-//            if (validSignature) {
-//                System.out.println("SUCESSO");
-//                return numCC;
-//            } else {
-//                System.out.println("FALHA NA AUTENTICAÇÂO");
-//                return null;
-//            }
-//        } catch (ServerNotActiveException ex) {
-//            Logger.getLogger(RemoteLoginObject.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        //retornar uma mensagem
-        return "OK";
+    public String loginUser(String numCC, String password) throws RemoteException {
+        String client = "";
+        try {
+            //nome do cliente
+            client = RemoteServer.getClientHost();
+            System.out.println("Message to " + client);
+
+            //chave public
+            PublicKey publicKey = Assimetric.getPublicKey("keys/USER" + numCC + ".pubkey");
+
+            //chave privada
+            byte[] encryptedPrivateKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".privkey"));
+            PrivateKey privateKey = Assimetric.getPrivateKey(PasswordBasedEncryption.decrypt(encryptedPrivateKey, password));
+
+            //chave simétrica
+            byte[] encryptedSimetricKey = Files.readAllBytes(Paths.get("keys/USER" + numCC + ".sim"));
+            Key simetricKey = Simetric.getAESKey(Simetric.decrypt(encryptedSimetricKey, privateKey));
+
+            //assinatura
+            byte[] assinatura = Files.readAllBytes(Paths.get("assinaturas/USER" + numCC + ".sig"));
+
+            //dados do registo
+            byte[] data = (numCC + password).getBytes();
+
+            //verificar assinatura
+            boolean validSignature = AssinaturaDigital.verify(data, assinatura, publicKey);
+
+            if (validSignature) {
+                System.out.println("SUCESSO");
+                return numCC;
+            } else {
+                System.out.println("FALHA NA AUTENTICAÇÂO");
+                return null;
+            }
+        } catch (ServerNotActiveException ex) {
+            Logger.getLogger(RemoteLoginObject.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RemoteException(ex.getMessage(), ex);
+        }
     }
 
-    
     /**
      * Método remoto para registar um cliente no sistema.
      *
@@ -113,37 +112,42 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
      * processo de autenticação.
      */
     @Override
-    public void registerUser(String numCC, String password) throws RemoteException{
-//        String regex = "\\d{8}";
-//        if (!numCC.matches(regex)) {
-//            return;
-//        }
-//        //gerar chaves
-//        KeyPair keyPair = Assimetric.generateKeyPair(2048);
-//
-//        //guardar a chave pública
-//        Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
-//
-//        //salvar chave privada com password 
-//        byte[] encryptedPrivate = PasswordBasedEncryption.encrypt(keyPair.getPrivate().getEncoded(), password);
-//        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")) {
-//            fos.write(encryptedPrivate);
-//        }
-//
-//        //assinar registo
-//        byte[] registo = (numCC + password).getBytes();
-//        byte[] assinatura = AssinaturaDigital.signature(registo, keyPair.getPrivate());
-//
-//        //guardar assinatura
-//        try (FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")) {
-//            fos.write(assinatura);
-//        }
-//
-//        //gerar e guardar chave simétrica
-//        Key simetric = Simetric.generateAESKey(128);
-//        byte[] encryptedSimetric = Simetric.encrypt(simetric.getEncoded(), keyPair.getPublic());
-//        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
-//            fos.write(encryptedSimetric);
-//        }
+    public void registerUser(String numCC, String password) throws RemoteException {
+        try {
+            String regex = "\\d{8}";
+            if (!numCC.matches(regex)) {
+                return;
+            }
+            //gerar chaves
+            KeyPair keyPair = Assimetric.generateKeyPair(2048);
+
+            //guardar a chave pública
+            Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
+
+            //salvar chave privada com password 
+            byte[] encryptedPrivate = PasswordBasedEncryption.encrypt(keyPair.getPrivate().getEncoded(), password);
+            try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")) {
+                fos.write(encryptedPrivate);
+            }
+
+            //assinar registo
+            byte[] registo = (numCC + password).getBytes();
+            byte[] assinatura = AssinaturaDigital.signature(registo, keyPair.getPrivate());
+
+            //guardar assinatura
+            try (FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")) {
+                fos.write(assinatura);
+            }
+
+            //gerar e guardar chave simétrica
+            Key simetric = Simetric.generateAESKey(128);
+            byte[] encryptedSimetric = Simetric.encrypt(simetric.getEncoded(), keyPair.getPublic());
+            try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
+                fos.write(encryptedSimetric);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RemoteLoginObject.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RemoteException(ex.getMessage(), ex);
+        }
     }
 }

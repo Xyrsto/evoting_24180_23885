@@ -134,7 +134,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String host = "192.168.1.158";
-        String remoteObject = String.format("//%s:%d/%s", host, LoginServer.remotePort, LoginServer.remoteName);
+        String remoteObject = String.format("//%s:%d/%s", host, 10_010, LoginServer.remoteName);
         try {
             RemoteLoginInterface remoteLogin = (RemoteLoginInterface) Naming.lookup(remoteObject);
             System.out.println("conectado ao " + host);
