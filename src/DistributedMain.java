@@ -1,7 +1,7 @@
 
 import evoting_distributed_24180_23885.Cliente.Login.LoginScreen;
 import evoting_distributed_24180_23885.Cliente.Login.LoginServer;
-import evoting_distributed_24180_23885.Cliente.MainScreen.MainScreen;
+import evoting_distributed_24180_23885.Cliente.Login.MainScreen;
 import miner01_gui.ClientMiner01;
 import miner01_gui.RemoteMiner01;
 
