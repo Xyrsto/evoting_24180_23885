@@ -96,7 +96,7 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
                 System.out.println("FALHA NA AUTENTICAÇÂO");
                 return null;
             }
-        } catch (ServerNotActiveException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(RemoteLoginObject.class.getName()).log(Level.SEVERE, null, ex);
             throw new RemoteException(ex.getMessage(), ex);
         }

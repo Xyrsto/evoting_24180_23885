@@ -144,6 +144,7 @@ public class LoginScreen extends javax.swing.JFrame {
             if (loggedUser != null) {
                 // Close the LoginScreen
                 this.dispose();
+                System.out.println("loggedUser = " + loggedUser);
 
                 // Open the MainScreen with the logged-in user
                 mainScreen.setLoggedUser(loggedUser);

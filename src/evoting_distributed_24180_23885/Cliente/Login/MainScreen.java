@@ -33,6 +33,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
+        
     }
 
     public String getLoggedUser() {
@@ -138,16 +139,19 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
         // TODO add your handling code here:
-        if (loggedUser != "admin") {
+        System.out.println(loggedUser);
+        if (!"admin".equals(loggedUser)) {
             JOptionPane.showMessageDialog(this,
                     "Precisa de ser administrador para adicionar candidatos",
                     "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        AddCandidato ver = new AddCandidato(this);
-        ver.setVisible(true);
-        ver.setAlwaysOnTop(true);
-        ver.mainWindow = this;
+        else{
+            AddCandidato ver = new AddCandidato(this);
+            ver.setVisible(true);
+            ver.setAlwaysOnTop(true);
+            ver.mainWindow = this;
+        }     
     }//GEN-LAST:event_jMenu1MenuSelected
 
     /**
