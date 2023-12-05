@@ -61,7 +61,7 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
      * processo de autenticação.
      */
     @Override
-    public String loginUser(String numCC, String password) throws RemoteException, Exception {
+    public String loginUser(String numCC, String password) throws RemoteException{
 //        String client = "";
 //        try {
 //            //nome do cliente
@@ -113,37 +113,37 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
      * processo de autenticação.
      */
     @Override
-    public void registerUser(String numCC, String password) throws RemoteException, Exception {
-        String regex = "\\d{8}";
-        if (!numCC.matches(regex)) {
-            return;
-        }
-        //gerar chaves
-        KeyPair keyPair = Assimetric.generateKeyPair(2048);
-
-        //guardar a chave pública
-        Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
-
-        //salvar chave privada com password 
-        byte[] encryptedPrivate = PasswordBasedEncryption.encrypt(keyPair.getPrivate().getEncoded(), password);
-        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")) {
-            fos.write(encryptedPrivate);
-        }
-
-        //assinar registo
-        byte[] registo = (numCC + password).getBytes();
-        byte[] assinatura = AssinaturaDigital.signature(registo, keyPair.getPrivate());
-
-        //guardar assinatura
-        try (FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")) {
-            fos.write(assinatura);
-        }
-
-        //gerar e guardar chave simétrica
-        Key simetric = Simetric.generateAESKey(128);
-        byte[] encryptedSimetric = Simetric.encrypt(simetric.getEncoded(), keyPair.getPublic());
-        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
-            fos.write(encryptedSimetric);
-        }
+    public void registerUser(String numCC, String password) throws RemoteException{
+//        String regex = "\\d{8}";
+//        if (!numCC.matches(regex)) {
+//            return;
+//        }
+//        //gerar chaves
+//        KeyPair keyPair = Assimetric.generateKeyPair(2048);
+//
+//        //guardar a chave pública
+//        Assimetric.saveKey(keyPair.getPublic(), "keys/USER" + numCC + ".pubkey");
+//
+//        //salvar chave privada com password 
+//        byte[] encryptedPrivate = PasswordBasedEncryption.encrypt(keyPair.getPrivate().getEncoded(), password);
+//        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".privkey")) {
+//            fos.write(encryptedPrivate);
+//        }
+//
+//        //assinar registo
+//        byte[] registo = (numCC + password).getBytes();
+//        byte[] assinatura = AssinaturaDigital.signature(registo, keyPair.getPrivate());
+//
+//        //guardar assinatura
+//        try (FileOutputStream fos = new FileOutputStream("assinaturas/USER" + numCC + ".sig")) {
+//            fos.write(assinatura);
+//        }
+//
+//        //gerar e guardar chave simétrica
+//        Key simetric = Simetric.generateAESKey(128);
+//        byte[] encryptedSimetric = Simetric.encrypt(simetric.getEncoded(), keyPair.getPublic());
+//        try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
+//            fos.write(encryptedSimetric);
+//        }
     }
 }

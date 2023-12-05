@@ -23,7 +23,7 @@ public interface RemoteLoginInterface extends Remote {
      * @throws RemoteException Exceção lançada em caso de erro remoto.
      * @throws Exception Exceção genérica que pode ser lançada durante o processo de autenticação.
      */
-    public String loginUser(String numCC, String password) throws RemoteException, Exception;
+    public String loginUser(String numCC, String password) throws RemoteException;
     
     
     /**
@@ -34,5 +34,5 @@ public interface RemoteLoginInterface extends Remote {
      * @throws RemoteException Exceção lançada em caso de erro remoto.
      * @throws Exception Exceção genérica que pode ser lançada durante o processo de autenticação.
      */
-    public void registerUser(String numCC, String password) throws RemoteException, Exception;
+    public void registerUser(String numCC, String password) throws RemoteException;
 }
