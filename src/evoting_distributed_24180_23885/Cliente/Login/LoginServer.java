@@ -42,6 +42,7 @@ public class LoginServer extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btStartServer = new javax.swing.JButton();
+        IPField = new javax.swing.JTextField();
         spMyServerPort = new javax.swing.JSpinner();
         runningIcon = new javax.swing.JLabel();
         pnMining = new javax.swing.JPanel();
@@ -52,14 +53,6 @@ public class LoginServer extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtData = new javax.swing.JTextArea();
-        pnNtework = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        txtNodeAdress = new javax.swing.JTextField();
-        btAddServer = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        txtNetwork = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtLog = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Miner (c)2023");
@@ -80,6 +73,9 @@ public class LoginServer extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btStartServer);
+
+        IPField.setText("Escreve o endereço do servidor");
+        jPanel2.add(IPField);
 
         spMyServerPort.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         spMyServerPort.setModel(new javax.swing.SpinnerNumberModel(10010, 10010, null, 1));
@@ -110,7 +106,7 @@ public class LoginServer extends javax.swing.JFrame {
         txtField2.setLayout(new java.awt.BorderLayout(0, 5));
 
         jLabel4.setText("Message");
-        txtField2.add(jLabel4, java.awt.BorderLayout.NORTH);
+        txtField2.add(jLabel4, java.awt.BorderLayout.PAGE_START);
 
         txtData.setEditable(false);
         txtData.setColumns(20);
@@ -128,52 +124,10 @@ public class LoginServer extends javax.swing.JFrame {
 
         tpMain.addTab("Login Server", pnServerMining);
 
-        pnNtework.setLayout(new java.awt.BorderLayout());
-
-        jPanel9.setLayout(new java.awt.BorderLayout());
-
-        txtNodeAdress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtNodeAdress.setText("//localhost:10010/RemoteLogin");
-        txtNodeAdress.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel9.add(txtNodeAdress, java.awt.BorderLayout.CENTER);
-
-        btAddServer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-server-icon.png"))); // NOI18N
-        btAddServer.setText("Add");
-        btAddServer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddServerActionPerformed(evt);
-            }
-        });
-        jPanel9.add(btAddServer, java.awt.BorderLayout.WEST);
-
-        pnNtework.add(jPanel9, java.awt.BorderLayout.NORTH);
-
-        txtNetwork.setColumns(20);
-        txtNetwork.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
-        txtNetwork.setRows(5);
-        jScrollPane3.setViewportView(txtNetwork);
-
-        pnNtework.add(jScrollPane3, java.awt.BorderLayout.CENTER);
-
-        tpMain.addTab("Network P2p", pnNtework);
-
         getContentPane().add(tpMain, java.awt.BorderLayout.CENTER);
-
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(64, 300));
-
-        txtLog.setBackground(new java.awt.Color(0, 0, 0));
-        txtLog.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtLog.setFont(new java.awt.Font("Courier New", 0, 14)); // NOI18N
-        jScrollPane2.setViewportView(txtLog);
-
-        getContentPane().add(jScrollPane2, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btAddServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddServerActionPerformed
-
-    }//GEN-LAST:event_btAddServerActionPerformed
 
     private void btStartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartServerActionPerformed
         //create object  to listen in the remote port
@@ -182,7 +136,7 @@ public class LoginServer extends javax.swing.JFrame {
             remotePort = (int) spMyServerPort.getValue();
             RemoteLoginObject helloWorld = new RemoteLoginObject(remotePort);
             //local adress of server
-            String host = InetAddress.getLocalHost().getHostAddress();
+            String host = IPField.getText();
             //create registry to object
             LocateRegistry.createRegistry(remotePort);
             //create adress of remote object
@@ -233,7 +187,7 @@ public class LoginServer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAddServer;
+    private javax.swing.JTextField IPField;
     private javax.swing.JButton btStartServer;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -241,12 +195,8 @@ public class LoginServer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel pnMining;
-    private javax.swing.JPanel pnNtework;
     private javax.swing.JPanel pnServer;
     private javax.swing.JPanel pnServerMining;
     private javax.swing.JLabel runningIcon;
@@ -254,9 +204,6 @@ public class LoginServer extends javax.swing.JFrame {
     private javax.swing.JTabbedPane tpMain;
     private javax.swing.JTextArea txtData;
     private javax.swing.JPanel txtField2;
-    private javax.swing.JTextPane txtLog;
-    private javax.swing.JTextArea txtNetwork;
-    private javax.swing.JTextField txtNodeAdress;
     // End of variables declaration//GEN-END:variables
 
 }
