@@ -85,11 +85,6 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btStartServerActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="IPField">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Escreve o endere&#xe7;o do servidor"/>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JSpinner" name="spMyServerPort">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

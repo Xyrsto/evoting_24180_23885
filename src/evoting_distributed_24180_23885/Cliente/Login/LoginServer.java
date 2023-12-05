@@ -42,7 +42,6 @@ public class LoginServer extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btStartServer = new javax.swing.JButton();
-        IPField = new javax.swing.JTextField();
         spMyServerPort = new javax.swing.JSpinner();
         runningIcon = new javax.swing.JLabel();
         pnMining = new javax.swing.JPanel();
@@ -73,9 +72,6 @@ public class LoginServer extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btStartServer);
-
-        IPField.setText("Escreve o endereço do servidor");
-        jPanel2.add(IPField);
 
         spMyServerPort.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         spMyServerPort.setModel(new javax.swing.SpinnerNumberModel(10010, 10010, null, 1));
@@ -136,11 +132,11 @@ public class LoginServer extends javax.swing.JFrame {
             remotePort = (int) spMyServerPort.getValue();
             RemoteLoginObject helloWorld = new RemoteLoginObject(remotePort);
             //local adress of server
-            String host = IPField.getText();
+            String host = InetAddress.getLocalHost().getHostAddress();
             //create registry to object
             LocateRegistry.createRegistry(remotePort);
             //create adress of remote object
-            String address = String.format("//%s:%d/%s", host, remotePort, remoteName);
+            String address = String.format("//%s:%d/%s", host, 10_001, remoteName);
             //link adress to object
             Naming.rebind(address, helloWorld);
             System.out.printf("Ready on %s%n", address);
@@ -187,7 +183,6 @@ public class LoginServer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField IPField;
     private javax.swing.JButton btStartServer;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
