@@ -22,11 +22,11 @@ public class DistributedMain {
                 LoginScreen loginScreen = new LoginScreen(mainScreen);
                 loginScreen.setVisible(true);
                 LoginServer loginServer = new LoginServer();
-                RemoteMiner01 remoteMiner = new RemoteMiner01();
-                ClientMiner01 clientMiner = new ClientMiner01();
+                //RemoteMiner01 remoteMiner = new RemoteMiner01();
+                //ClientMiner01 clientMiner = new ClientMiner01();
                 loginServer.setVisible(true);
-                remoteMiner.setVisible(true);
-                clientMiner.setVisible(true);
+                //remoteMiner.setVisible(true);
+                //clientMiner.setVisible(true);
             }
         });
     }

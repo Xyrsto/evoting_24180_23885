@@ -136,7 +136,7 @@ public class LoginServer extends javax.swing.JFrame {
             //create registry to object
             LocateRegistry.createRegistry(remotePort);
             //create adress of remote object
-            String address = String.format("//%s:%d/%s", host, 10_001, remoteName);
+            String address = String.format("//%s:%d/%s", host, remotePort, remoteName);
             //link adress to object
             Naming.rebind(address, helloWorld);
             System.out.printf("Ready on %s%n", address);
