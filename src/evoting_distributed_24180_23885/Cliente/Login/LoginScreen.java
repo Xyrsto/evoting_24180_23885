@@ -4,11 +4,15 @@
  */
 package evoting_distributed_24180_23885.Cliente.Login;
 
+import evoting_24180_23885.Candidato;
 import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,6 +27,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     String loggedUser;
     private MainScreen mainScreen;
+    String host = "192.168.1.237";
 
     /**
      * Creates new form Client
@@ -133,7 +138,6 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String host = "192.168.1.158";
         String remoteObject = String.format("//%s:%d/%s", host, 10_010, LoginServer.remoteName);
         try {
             RemoteLoginInterface remoteLogin = (RemoteLoginInterface) Naming.lookup(remoteObject);
@@ -149,6 +153,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 // Open the MainScreen with the logged-in user
                 mainScreen.setLoggedUser(loggedUser);
                 mainScreen.setVisible(true);
+                mainScreen.loadCandidatos();
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -157,7 +162,6 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String host = "192.168.68.100";
         String remoteObject = String.format("//%s:%d/%s", host, LoginServer.remotePort, LoginServer.remoteName);
         try {
             RemoteLoginInterface remoteRegister = (RemoteLoginInterface) Naming.lookup(remoteObject);
@@ -217,6 +221,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 title, JOptionPane.ERROR_MESSAGE);
         Logger.getAnonymousLogger().log(Level.SEVERE, null, ex);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

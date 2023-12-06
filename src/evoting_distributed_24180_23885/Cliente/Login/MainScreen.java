@@ -4,9 +4,10 @@
  */
 package evoting_distributed_24180_23885.Cliente.Login;
 
-import evoting_distributed_24180_23885.Cliente.Login.AddCandidato;
 import evoting_24180_23885.Candidato;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -187,6 +188,19 @@ public class MainScreen extends javax.swing.JFrame {
                 new MainScreen().setVisible(true);
             }
         });
+    }
+    
+        public void loadCandidatos() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Partidos/currentState.partido"))) {
+            candidatos = (ArrayList<Candidato>) ois.readObject();
+            for (Candidato c : candidatos) {
+                model.addElement(c.nome);
+                System.out.println(c.getNome() + "->" + c.getNumeroVotos());
+            }
+            jComboBox1.setModel(model);
+        } catch (Exception err) {
+            System.out.println(err.toString());
+        }
     }
 
 
