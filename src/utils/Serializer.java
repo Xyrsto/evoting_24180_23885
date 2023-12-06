@@ -22,6 +22,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Conversao entre objectos e arrays de bytes
@@ -29,13 +32,15 @@ import java.io.ObjectOutputStream;
  * @author ZULU
  */
 public class Serializer {
+
     /**
-     *converte um objecto num array de bytes
+     * converte um objecto num array de bytes
+     *
      * @param obj objecto
      * @return array de bytes
      * @throws IOException
      */
-    public static byte[] toByteArray(Object obj) throws IOException {
+    public static byte[] objectToByteArray(Object obj) throws IOException {
         //stream em memoria
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         //stream de objectos
@@ -47,18 +52,52 @@ public class Serializer {
     }
 
     /**
+     * converte um objecto num array de bytes
+     *
+     * @param obj objecto
+     * @return array de bytes
+     * @throws IOException
+     */
+    public static String objectToBase64(Object obj) {
+        try {
+            return Base64.getEncoder().encodeToString(objectToByteArray(obj));
+        } catch (IOException ex) {
+            return "ERROR in Serializer objectToBase64";
+        }
+    }
+
+    /**
      * converte array de bytes num objecto
+     *
      * @param bytes array de bytes
      * @return objecto
      * @throws IOException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
-    public static Object toObject(byte[] bytes) throws IOException, ClassNotFoundException {
+    public static Object byteArrayToObject(byte[] bytes) throws IOException, ClassNotFoundException {
         //stream em memoria
         ByteArrayInputStream b = new ByteArrayInputStream(bytes);
         //stream de objectos
         ObjectInputStream o = new ObjectInputStream(b);
         //ler o objecto da stream
         return o.readObject();
+    }
+
+    /**
+     * converte array de bytes num objecto
+     *
+     * @param b64 base 64
+     * @return objecto
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static Object base64ToObject(String b64) {
+
+        try {
+            return byteArrayToObject(Base64.getDecoder().decode(b64));
+        } catch (Exception ex) {
+            Logger.getLogger(Serializer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

@@ -13,31 +13,39 @@
 //::                                                               (c)2023   ::
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //////////////////////////////////////////////////////////////////////////////
-package evoting_distributed_24180_23885.ServidorMiner;
+package evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils;
+
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Created on 29/11/2023, 07:47:26
+ * Created on 06/12/2023, 18:06:52
  *
- * @author IPT - computer
- * @version 1.0
+ * @author manso - computer
  */
-public interface MiningListener {
+public class LastBlock {
 
-    public void onException(String title, Exception ex);
+    RemoteObject myNode;
 
-    public void onMessage(String title, String msg);
+    public LastBlock(RemoteObject myNode) {
+        this.myNode = myNode;
+    }
 
-    public void onStartServer(String adress);
+    public Block getLastBlock() throws RemoteException {
+//        List<Block> lst = new ArrayList<>();
+//        try {
+//            lst.add(myNode.blockchain.getLast());
+//            for (RemoteInterface node : myNode.getNetwork()) {
+//                lst.add(node.getBlockchain().getLast());
+//            }
+//
+//        } catch (Exception e) {
+//        }
+        List blks = myNode.getLastBlock(new Date().getTime(), 0, 7);
 
-    public void onAddNode(RemoteP2PminerInterface node);
-    
+        return (Block) new Histogram().getMostCommon(blks);
 
-    public void onStartMining(String message, int zeros);
-
-    public void onStopMining(int nonce);
-
-    public void onMining(int number);
-
-    public void onNounceFound(int nonce);
+    }
 
 }

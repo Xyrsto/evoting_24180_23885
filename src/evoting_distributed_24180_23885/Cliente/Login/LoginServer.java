@@ -74,7 +74,7 @@ public class LoginServer extends javax.swing.JFrame {
         jPanel2.add(btStartServer);
 
         spMyServerPort.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        spMyServerPort.setModel(new javax.swing.SpinnerNumberModel(10010, 10010, null, 1));
+        spMyServerPort.setModel(new javax.swing.SpinnerNumberModel(10011, 10011, null, 1));
         spMyServerPort.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.add(spMyServerPort);
 

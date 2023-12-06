@@ -13,7 +13,7 @@
 //::                                                               (c)2022   ::
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //////////////////////////////////////////////////////////////////////////////
-package evoting_distributed_24180_23885.ServidorMiner;
+package evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,6 +31,8 @@ import java.util.logging.Logger;
  */
 public class MinerP2P {
 
+    //dados de minagem 
+    String data;
     //ticket para com números para testar
     AtomicInteger ticket;
     //noce que mina a mensagem
@@ -61,7 +63,7 @@ public class MinerP2P {
     }
 
     public void stopMining(int number) {
-        if (worker != null) {
+        if (worker != null) {            
             worker.stop(number);
         }
     }
@@ -70,8 +72,16 @@ public class MinerP2P {
         return ticket.get();
     }
 
+    public String getData() {
+        return data;
+    }
+
     public boolean isMining() {
-        return worker != null &&  nonce.get() == 0;
+        return worker != null && nonce.get() == 0;
+    }
+    
+    public int getNonce() {
+        return nonce.get();
     }
 
     /**
@@ -81,7 +91,7 @@ public class MinerP2P {
      * @return
      * @throws Exception
      */
-    public int getNonce() throws Exception {
+    public int waitToNonce() throws Exception {
         if (worker != null || worker.isAlive()) {
             worker.join();
             return nonce.get();
@@ -95,46 +105,46 @@ public class MinerP2P {
     ///////////////////////////////////////////////////////////////////////////
     private class MinerTHR extends Thread {
 
-        AtomicInteger ticket;
-        AtomicInteger nonce;
+        AtomicInteger myTicket;
+        AtomicInteger myNonce;
         int dificulty;
-        String data;
+        String myData;
         MiningListener listener;
 
         public MinerTHR(AtomicInteger ticket, AtomicInteger nonce, int dificulty, String data, MiningListener listener) {
-            this.ticket = ticket;
-            this.nonce = nonce;
+            this.myTicket = ticket;
+            this.myNonce = nonce;
             this.dificulty = dificulty;
-            this.data = data;
+            this.myData = data;
             this.listener = listener;
         }
 
         public void stop(int number) {
-            nonce.set(number);
+            myNonce.set(number);
             interrupt();
         }
 
         public void run() {
-            //:::::::::::::  L I S T E N E R  ::::::::::::::::::::::::::::::
-            listener.onStartMining(Thread.currentThread().getName(), dificulty);
             //String of zeros
             String zeros = String.format("%0" + dificulty + "d", 0);
             int number;
-            while (nonce.get()== 0) {
+            while (myNonce.get() == 0) {
                 //calculate hash of block   
-                number = ticket.getAndIncrement();
+                number = myTicket.getAndIncrement();
                 //:::::::::::::  L I S T E N E R  ::::::::::::::::::::::::::::::
-                listener.onMining(number);
-                String hash = getHash(number + data);
+                if (System.currentTimeMillis() % 100 == 0) {
+                    listener.onMining(number);
+                }
+                String hash = getHash(number + myData);
                 //Nounce found
                 if (hash.startsWith(zeros)) {
                     //:::::::::::::  L I S T E N E R  ::::::::::::::::::::::::::::::
                     listener.onNounceFound(number);
-                    nonce.set(number);
+                    myNonce.set(number);
                 }
             }
             //:::::::::::::  L I S T E N E R  ::::::::::::::::::::::::::::::
-            listener.onStopMining(nonce.get());
+            listener.onStopMining(myNonce.get());
         }
     }
 

@@ -5,13 +5,20 @@
 package evoting_distributed_24180_23885.Cliente.Login;
 
 import evoting_24180_23885.Candidato;
+import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface;
+import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote;
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import utils.GuiUtils;
+import utils.RMI;
 
 /**
  *
@@ -22,6 +29,8 @@ public class MainScreen extends javax.swing.JFrame {
     private String loggedUser;
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+    RemoteInterface remote;
+    String address;
 
     /**
      * Creates new form MainScreen
@@ -32,9 +41,14 @@ public class MainScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    public MainScreen(String minerAddress) {
+        this();
+        address = minerAddress;
+    }
+
     public void setLoggedUser(String loggedUser) {
         this.loggedUser = loggedUser;
-        
+
     }
 
     public String getLoggedUser() {
@@ -60,7 +74,7 @@ public class MainScreen extends javax.swing.JFrame {
         model.addElement(newCand.nome);
 
         // Aplica o modelo à combo box
-        jComboBox1.setModel(model);
+        candidatosCombo.setModel(model);
     }
 
     /**
@@ -73,7 +87,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        candidatosCombo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -83,6 +97,11 @@ public class MainScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Votar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Candidato");
 
@@ -112,7 +131,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(candidatosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jButton1)))
@@ -126,7 +145,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(candidatosCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(251, Short.MAX_VALUE))
@@ -146,14 +165,30 @@ public class MainScreen extends javax.swing.JFrame {
                     "Precisa de ser administrador para adicionar candidatos",
                     "Warning", JOptionPane.WARNING_MESSAGE);
             return;
-        }
-        else{
+        } else {
             AddCandidato ver = new AddCandidato(this);
             ver.setVisible(true);
             ver.setAlwaysOnTop(true);
             ver.mainWindow = this;
-        }     
+        }
     }//GEN-LAST:event_jMenu1MenuSelected
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            remote = (RemoteInterface) RMI.getRemote(address);
+            setTitle(address);
+            onMessage("Connected to ", address);
+            Vote t = new Vote(
+                    loggedUser,
+                    candidatosCombo.getSelectedItem().toString()
+            );
+            System.out.println(t.toString());
+            remote.addTransaction(t.toText());
+        } catch (Exception ex) {
+            onException("Add Transaction", ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,24 +224,33 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
     }
-    
-        public void loadCandidatos() {
+
+    public void loadCandidatos() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Partidos/currentState.partido"))) {
             candidatos = (ArrayList<Candidato>) ois.readObject();
             for (Candidato c : candidatos) {
                 model.addElement(c.nome);
                 System.out.println(c.getNome() + "->" + c.getNumeroVotos());
             }
-            jComboBox1.setModel(model);
+            candidatosCombo.setModel(model);
         } catch (Exception err) {
             System.out.println(err.toString());
         }
     }
+    
+    public void onException(String title, Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(),
+                title, JOptionPane.ERROR_MESSAGE);
+        Logger.getAnonymousLogger().log(Level.SEVERE, null, ex);
+    }
+
+    public void onMessage(String title, String msg) {
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> candidatosCombo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
