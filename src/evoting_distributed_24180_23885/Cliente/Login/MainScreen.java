@@ -177,9 +177,9 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            remote = (RemoteInterface) RMI.getRemote(address);
-            setTitle(address);
-            onMessage("Connected to ", address);
+            remote = (RemoteInterface) RMI.getRemote("192.168.1.156", 10_010, "RemoteMiner");
+            setTitle("192.168.1.156");
+            onMessage("Connected to ", "192.168.1.156");
 
             Vote t = new Vote(
                     Hash.getHash(loggedUser),

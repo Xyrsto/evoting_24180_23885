@@ -49,6 +49,7 @@ public class MinerP2P {
         this.listener = listener;
     }
 
+    //TODO PARALELIZAR ISTO 
     public void startMining(String data, int dificulty) {
         Random rnd = new Random();
         //parar o mineiro se ainda estiver a minar
