@@ -244,8 +244,13 @@ public class ServerMiner extends javax.swing.JFrame implements MiningListener {
         jPanel9.setLayout(new java.awt.BorderLayout());
 
         txtNodeAdress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtNodeAdress.setText("//localhost:10010/RemoteMiner");
+        txtNodeAdress.setText("//192.168.1.156:10010/RemoteMiner");
         txtNodeAdress.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtNodeAdress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNodeAdressActionPerformed(evt);
+            }
+        });
         jPanel9.add(txtNodeAdress, java.awt.BorderLayout.CENTER);
 
         btAddServer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-server-icon.png"))); // NOI18N
@@ -449,6 +454,10 @@ public class ServerMiner extends javax.swing.JFrame implements MiningListener {
             Logger.getLogger(ServerMiner.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtNodeAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNodeAdressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNodeAdressActionPerformed
 
     /**
      * @param args the command line arguments

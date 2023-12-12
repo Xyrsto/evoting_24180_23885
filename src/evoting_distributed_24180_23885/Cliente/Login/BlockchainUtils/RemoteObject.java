@@ -59,7 +59,7 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
             this.listener = listener;
             this.myMiner = new MinerP2P(listener);
             //atualizar o endereço do objeto remoto
-            address = "//" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/" + RemoteInterface.OBJECT_NAME;
+            address = "//192.168.1.156:" + port + "/" + RemoteInterface.OBJECT_NAME;
             //inicializar nova rede
             network = new CopyOnWriteArrayList<>();
             //inicializar novas transações

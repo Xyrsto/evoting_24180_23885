@@ -17,7 +17,7 @@ import miner01_gui.RemoteMiner01;
  * @author rodri
  */
 public class DistributedMain {
-    private static final String host = "//169.254.76.66:10010";
+    private static final String host = "//192.168.1.156:10011";
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -44,7 +44,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     public MainScreen(String minerAddress) {
         this();
-        address = minerAddress;
+        address = "192.168.1.156";
     }
 
     public void setLoggedUser(String loggedUser) {
