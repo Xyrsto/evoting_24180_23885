@@ -211,7 +211,7 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
         listener.onUpdateTransactions(transaction);
         listener.onMessage("addTransaction", getClientName());
         //se tiver mais de 4 transacoes e não estiver a minar
-        if (transactions.getList().size() >= 10 && !myMiner.isMining()) {
+        if (transactions.getList().size() >= 2 && !myMiner.isMining()) {
             buildNewBlock();
         } else {
             //sincronizar a transacao
@@ -374,24 +374,25 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
         myList.add(blockchain.getLast());
         //perguntar à rede
         //sincronizar a blockchain pela rede com multithreading
-        int numCores = Runtime.getRuntime().availableProcessors();
-        Thread[] threads = new Thread[numCores];
-
-        for (int i = 0; i < numCores; i++) {
+        int numNodes = network.size();
+        final Thread[] threads = new Thread[numNodes];
+        int i = 0;
+        for (RemoteInterface node : network) {
             threads[i] = new Thread(() -> {
-                for (RemoteInterface node : network) {
-                    try {
-                        listener.onConsensus("Get Last Block Lisr", node.getAdress());
-                        List resp = node.getLastBlock(timeStamp, dept + 1, maxDep);
-                        if (resp != null) {
-                            myList.addAll(resp);
-                        }
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(RemoteObject.class.getName()).log(Level.SEVERE, null, ex);
+
+                try {
+                    listener.onConsensus("Get Last Block Lisr", node.getAdress());
+                    List resp = node.getLastBlock(timeStamp, dept + 1, maxDep);
+                    if (resp != null) {
+                        myList.addAll(resp);
                     }
+                } catch (RemoteException ex) {
+                    Logger.getLogger(RemoteObject.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            });
+            }
+            );
             threads[i].start();
+            i++;
         }
         for (Thread t : threads) {
             try {

@@ -7,6 +7,7 @@ package evoting_distributed_24180_23885.Cliente.Login;
 import evoting_24180_23885.Candidato;
 import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface;
 import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote;
+import evoting_24180_23885.*;
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -179,9 +180,10 @@ public class MainScreen extends javax.swing.JFrame {
             remote = (RemoteInterface) RMI.getRemote(address);
             setTitle(address);
             onMessage("Connected to ", address);
+
             Vote t = new Vote(
-                    loggedUser,
-                    candidatosCombo.getSelectedItem().toString()
+                    Hash.getHash(loggedUser),
+                    Hash.getHash(candidatosCombo.getSelectedItem().toString())
             );
             System.out.println(t.toString());
             remote.addTransaction(t.toText());
@@ -237,7 +239,7 @@ public class MainScreen extends javax.swing.JFrame {
             System.out.println(err.toString());
         }
     }
-    
+
     public void onException(String title, Exception ex) {
         JOptionPane.showMessageDialog(this, ex.getMessage(),
                 title, JOptionPane.ERROR_MESSAGE);
