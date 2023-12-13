@@ -57,7 +57,7 @@ public class MinerP2P {
         //começar num numero aleatório
         ticket = new AtomicInteger(Math.abs(rnd.nextInt() + 1));
         nonce = new AtomicInteger(0);
-        //Criar o array de threas e polas a correr
+        //Criar o array de threads e pô las a correr
         worker = new MinerTHR(ticket, nonce, dificulty, data, listener);
         worker.start();
     }

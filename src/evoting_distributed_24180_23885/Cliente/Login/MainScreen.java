@@ -30,7 +30,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
     RemoteInterface remote;
-    String address;
+    String address = "192.168.1.67";
 
     /**
      * Creates new form MainScreen
@@ -176,7 +176,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            remote = (RemoteInterface) RMI.getRemote(address);
+            remote = (RemoteInterface) RMI.getRemote("192.168.1.67", 10_010, "RemoteMiner");
             setTitle(address);
             onMessage("Connected to ", address);
             Vote t = new Vote(

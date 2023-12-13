@@ -1,23 +1,26 @@
 package evoting_distributed_24180_23885.Cliente.Login;
 
-
 import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.ServerMiner;
 import evoting_distributed_24180_23885.Cliente.Login.LoginScreen;
 import evoting_distributed_24180_23885.Cliente.Login.LoginServer;
 import evoting_distributed_24180_23885.Cliente.Login.MainScreen;
-import miner01_gui.ClientMiner01;
-import miner01_gui.RemoteMiner01;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 /**
+ * ALTERAR:
  *
- * @author rodri
+ * @neste ficheiro: host para o nosso ip;
+ * @LoginScreen: host para o nosso ip ;
+ * @MainScreen: address para o nosso ip;
+ * @ServerMiner: na GUI network meter o nosso ip;
  */
 public class DistributedMain {
-    private static final String host = "//169.254.76.66:10010";
+
+    private static final String host = "//192.168.1.67:10010";
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -34,7 +37,7 @@ public class DistributedMain {
                     new ServerMiner(10_013, 1200, 150).setVisible(true);
                 });
                 java.awt.EventQueue.invokeLater(() -> {
-                    new LoginScreen(new MainScreen(host+"/RemoteMiner")).setVisible(true);
+                    new LoginScreen(new MainScreen(host + "/RemoteMiner")).setVisible(true);
                 });
             }
         });

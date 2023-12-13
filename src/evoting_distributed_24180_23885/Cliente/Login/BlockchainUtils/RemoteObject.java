@@ -103,17 +103,17 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
     }
 
     @Override
-    public void startMining(String msg, int dificulty) throws RemoteException {
+    public void startMining(String msg, int difficulty) throws RemoteException {
         //se estivar a minar não faz nada
         if (myMiner.isMining()) {
             return;
         }
         //colocar o mineiro a minar
-        myMiner.startMining(msg, dificulty);
-        listener.onStartMining(msg, dificulty);
+        myMiner.startMining(msg, difficulty);
+        listener.onStartMining(msg, difficulty);
         //mandar a rede minar
         for (RemoteInterface node : network) {
-            node.startMining(msg, dificulty);
+            node.startMining(msg, difficulty);
         }
     }
 
@@ -211,7 +211,7 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteInterface
         listener.onUpdateTransactions(transaction);
         listener.onMessage("addTransaction", getClientName());
         //se tiver mais de 4 transacoes e não estiver a minar
-        if (transactions.getList().size() >= 10 && !myMiner.isMining()) {
+        if (transactions.getList().size() >= 2 && !myMiner.isMining()) {
             buildNewBlock();
         } else {
             //sincronizar a transacao
