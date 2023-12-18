@@ -4,21 +4,25 @@
  */
 package evoting_distributed_24180_23885.Cliente.Login;
 
+import evoting_24180_23885.Hash;
 import evoting_24180_23885.SecurityUtils.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.RemoteServer;
-import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -145,6 +149,34 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
             try (FileOutputStream fos = new FileOutputStream("keys/USER" + numCC + ".sim")) {
                 fos.write(encryptedSimetric);
             }
+
+            try {
+                // declara o hashmap eleitores
+                HashMap<String, Integer> eleitores;
+                System.out.println("começou");
+                try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("eleitoresHashMap"))) {
+                    // lê ficheiro
+                    eleitores = (HashMap<String, Integer>) ois.readObject();
+                    System.out.println("leu hashmap");
+                } catch (FileNotFoundException e) {
+                    // ficheiro não existente
+                    eleitores = new HashMap<>();
+                    System.out.println("criou hashmap");
+                }
+
+                // adicionar novo eleitor ao hashmap
+                eleitores.put(Hash.getHash(numCC), 0);
+                System.out.println("criou eleitor");
+
+                // gravar de volta no ficheiro
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitoresHashMap"))) {            
+                    oos.writeObject(eleitores);
+                    System.out.println("guardou hashmap");
+                }
+            } catch (Exception err) {
+                // Handle exceptions (e.g., ClassNotFoundException, IOException)
+                err.printStackTrace();
+            }        
         } catch (Exception ex) {
             Logger.getLogger(RemoteLoginObject.class.getName()).log(Level.SEVERE, null, ex);
             throw new RemoteException(ex.getMessage(), ex);

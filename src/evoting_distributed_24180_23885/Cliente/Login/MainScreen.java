@@ -5,19 +5,20 @@
 package evoting_distributed_24180_23885.Cliente.Login;
 
 import evoting_24180_23885.Candidato;
+import evoting_24180_23885.Hash;
 import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface;
 import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote;
-import java.awt.Color;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import utils.GuiUtils;
 import utils.RMI;
 
 /**
@@ -30,7 +31,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
     RemoteInterface remote;
-    String address = "192.168.1.67";
+    String address = "192.168.1.68";
 
     /**
      * Creates new form MainScreen
@@ -178,12 +179,39 @@ public class MainScreen extends javax.swing.JFrame {
             remote = (RemoteInterface) RMI.getRemote(address, 10_010, "RemoteMiner");
             setTitle(address);
             onMessage("Connected to ", address);
+
+            HashMap<String, Integer> eleitores;
+            // load hashmap
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("eleitoresHashMap"))) {
+                // lê ficheiro
+                eleitores = (HashMap<String, Integer>) ois.readObject();
+                System.out.println("leu hashmap");
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null, "Este utilizador não se encontra no hashmap. Voto não aplicado", "Utilizador inválido", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // não permite o voto se já votou
+            if (eleitores.get(Hash.getHash(loggedUser)) == 1) {
+                JOptionPane.showMessageDialog(null, "Este utilizador já votou. Voto não aplicado", "Utilizador inválido", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
             Vote t = new Vote(
-                    loggedUser,
-                    candidatosCombo.getSelectedItem().toString()
+                    Hash.getHash(loggedUser),
+                    Hash.getHash(candidatosCombo.getSelectedItem().toString())
             );
             System.out.println(t.toString());
             remote.addTransaction(t.toText());
+
+            // muda o estado do eleitor para mostrar que votou
+            eleitores.put(Hash.getHash(loggedUser), 1);
+
+            // gravar de volta no ficheiro
+            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitoresHashMap"))) {
+                oos.writeObject(eleitores);
+                System.out.println("guardou hashmap");
+            }
         } catch (Exception ex) {
             onException("Add Transaction", ex);
         }
@@ -236,7 +264,7 @@ public class MainScreen extends javax.swing.JFrame {
             System.out.println(err.toString());
         }
     }
-    
+
     public void onException(String title, Exception ex) {
         JOptionPane.showMessageDialog(this, ex.getMessage(),
                 title, JOptionPane.ERROR_MESSAGE);
