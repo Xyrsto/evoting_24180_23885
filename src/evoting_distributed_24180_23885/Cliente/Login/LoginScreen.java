@@ -12,12 +12,14 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.server.RMISocketFactory;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.GuiUtils;
 import utils.RMI;
+import utils.SSLFactoryRMI;
 
 /**
  *
@@ -27,7 +29,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     String loggedUser;
     private MainScreen mainScreen;
-    String host = "192.168.1.68";
+    String host = "192.168.1.67";
 
     /**
      * Creates new form Client
@@ -35,7 +37,7 @@ public class LoginScreen extends javax.swing.JFrame {
     public LoginScreen(MainScreen mainScreen) {
         initComponents();
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.mainScreen = mainScreen;
     }
 
@@ -140,6 +142,7 @@ public class LoginScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         String remoteObject = String.format("//%s:%d/%s", host, 10_011, LoginServer.remoteName);
         try {
+            //RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
             RemoteLoginInterface remoteLogin = (RemoteLoginInterface) Naming.lookup(remoteObject);
             System.out.println("conectado ao " + host);
             loggedUser = remoteLogin.loginUser(numCCTextArea.getText(), jPasswordField1.getText());

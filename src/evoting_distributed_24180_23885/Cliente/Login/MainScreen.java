@@ -13,6 +13,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.server.RMISocketFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -20,6 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import utils.RMI;
+import utils.SSLFactoryRMI;
 
 /**
  *
@@ -31,7 +36,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
     RemoteInterface remote;
-    String address = "192.168.1.68";
+    String address = "192.168.1.67";
 
     /**
      * Creates new form MainScreen
@@ -176,6 +181,8 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
+            RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
+
             remote = (RemoteInterface) RMI.getRemote(address, 10_010, "RemoteMiner");
             setTitle(address);
             onMessage("Connected to ", address);
@@ -192,6 +199,8 @@ public class MainScreen extends javax.swing.JFrame {
             }
 
             // não permite o voto se já votou
+            System.out.println(eleitores.toString());
+            
             if (eleitores.get(Hash.getHash(loggedUser)) == 1) {
                 JOptionPane.showMessageDialog(null, "Este utilizador já votou. Voto não aplicado", "Utilizador inválido", JOptionPane.INFORMATION_MESSAGE);
                 return;

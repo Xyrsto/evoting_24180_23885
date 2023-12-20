@@ -1,17 +1,13 @@
 package evoting_distributed_24180_23885.Cliente.Login;
 
-import java.awt.Color;
 import java.net.InetAddress;
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.util.List;
+import java.rmi.server.RMISocketFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import utils.SSLFactoryRMI;
 
-import utils.GuiUtils;
-import utils.RMI;
 
 /**
  * @author IPT
@@ -127,8 +123,8 @@ public class LoginServer extends javax.swing.JFrame {
 
     private void btStartServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStartServerActionPerformed
         //create object  to listen in the remote port
-
         try {
+            //RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
             remotePort = (int) spMyServerPort.getValue();
             RemoteLoginObject helloWorld = new RemoteLoginObject(remotePort);
             //local adress of server
