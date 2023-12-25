@@ -250,7 +250,7 @@ public class ServerMiner extends javax.swing.JFrame implements MiningListener {
         jPanel9.setLayout(new java.awt.BorderLayout());
 
         txtNodeAdress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtNodeAdress.setText("//192.168.1.67:10010/RemoteMiner");
+        txtNodeAdress.setText("//192.168.1.236:10010/RemoteMiner");
         txtNodeAdress.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtNodeAdress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

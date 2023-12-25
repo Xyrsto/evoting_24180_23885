@@ -11,14 +11,14 @@ import evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.server.RMISocketFactory;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -36,7 +36,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
     RemoteInterface remote;
-    String address = "192.168.1.67";
+    String address = "192.168.1.236";
 
     /**
      * Creates new form MainScreen
@@ -98,6 +98,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,15 +117,27 @@ public class MainScreen extends javax.swing.JFrame {
 
         jMenu1.setText("Adicionar Candidato");
         jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
-            public void menuCanceled(javax.swing.event.MenuEvent evt) {
-            }
-            public void menuDeselected(javax.swing.event.MenuEvent evt) {
-            }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 jMenu1MenuSelected(evt);
             }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
         });
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Terminar Eleição");
+        jMenu2.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu2MenuSelected(evt);
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+        });
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -181,26 +194,25 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
+            if (RMISocketFactory.getSocketFactory() == null) {
+                RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
+            }
 
             remote = (RemoteInterface) RMI.getRemote(address, 10_010, "RemoteMiner");
             setTitle(address);
             onMessage("Connected to ", address);
 
             HashMap<String, Integer> eleitores;
-            // load hashmap
+            // load hashmap de eleitores
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("eleitoresHashMap"))) {
                 // lê ficheiro
                 eleitores = (HashMap<String, Integer>) ois.readObject();
-                System.out.println("leu hashmap");
             } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(null, "Este utilizador não se encontra no hashmap. Voto não aplicado", "Utilizador inválido", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
             // não permite o voto se já votou
-            System.out.println(eleitores.toString());
-            
             if (eleitores.get(Hash.getHash(loggedUser)) == 1) {
                 JOptionPane.showMessageDialog(null, "Este utilizador já votou. Voto não aplicado", "Utilizador inválido", JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -216,15 +228,27 @@ public class MainScreen extends javax.swing.JFrame {
             // muda o estado do eleitor para mostrar que votou
             eleitores.put(Hash.getHash(loggedUser), 1);
 
-            // gravar de volta no ficheiro
+            // gravar de volta no ficheiro de eleitores
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitoresHashMap"))) {
                 oos.writeObject(eleitores);
-                System.out.println("guardou hashmap");
             }
+
+            handlePartyVoteCount(loggedUser, candidatosCombo.getSelectedItem().toString());
         } catch (Exception ex) {
             onException("Add Transaction", ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenu2MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu2MenuSelected
+        try {
+            // TODO add your handling code here:
+            displayResults();
+        } catch (IOException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenu2MenuSelected
 
     /**
      * @param args the command line arguments
@@ -283,12 +307,55 @@ public class MainScreen extends javax.swing.JFrame {
     public void onMessage(String title, String msg) {
     }
 
+    public void handlePartyVoteCount(String eleitorId, String candidato) throws IOException, ClassNotFoundException {
+        Map<String, Integer> hashedVotes;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("votosHashMap"))) {
+            // lê ficheiro
+            hashedVotes = (HashMap<String, Integer>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            hashedVotes = new HashMap<>();
+        }
+
+        // Update the count for the party
+        hashedVotes.put(candidato, hashedVotes.getOrDefault(candidato, 0) + 1);
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("votosHashMap"))) {
+            System.out.println("escreveu hashmap");
+            oos.writeObject(hashedVotes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void displayResults() throws IOException, ClassNotFoundException {
+
+        Map<String, Integer> hashedVotes;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("votosHashMap"))) {
+            // lê ficheiro
+            hashedVotes = (HashMap<String, Integer>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            hashedVotes = new HashMap<>();
+        }
+
+        System.out.println("Party-wise Vote Count:");
+        StringBuilder results = new StringBuilder();
+
+        for (Map.Entry<String, Integer> entry : hashedVotes.entrySet()) {
+            results.append(entry.getKey()).append(": ").append(entry.getValue()).append(" votes\n");
+        }
+        JOptionPane.showMessageDialog(null, results.toString(), "Contagem de Votos", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> candidatosCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

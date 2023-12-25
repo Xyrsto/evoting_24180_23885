@@ -29,7 +29,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     String loggedUser;
     private MainScreen mainScreen;
-    String host = "192.168.1.67";
+    String host = "192.168.1.236";
 
     /**
      * Creates new form Client

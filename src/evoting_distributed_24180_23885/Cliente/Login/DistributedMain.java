@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class DistributedMain {
 
-    private static final String host = "//192.168.1.67:10011";
+    private static final String host = "//192.168.1.236:10011";
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
