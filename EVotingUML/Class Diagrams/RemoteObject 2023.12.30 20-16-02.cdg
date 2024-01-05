@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="RemoteObject">
+  <ClassDiagramComponents>
+    <Class name="RemoteObject" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="listener" type="MiningListener" visibility="package"/>
+        <Field name="myMiner" type="MinerP2P" visibility="package"/>
+        <Field name="transactions" type="Transactions" visibility="package"/>
+        <Field name="miningBlock" type="Block" visibility="public"/>
+        <Field name="blockchain" type="BlockChain" visibility="public"/>
+        <Field name="address" type="String" visibility="private"/>
+        <Field name="network" type="List&lt;RemoteInterface&gt;" visibility="private"/>
+        <Field name="flagLastBlock" type="Map&lt;Long, Boolean&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="MiningListener" name="listener"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getAdress" returnType="String" visibility="public"/>
+        <Method name="getClientName" returnType="String" visibility="public"/>
+        <Method name="getHash" returnType="String" visibility="public">
+          <Argument type="int" name="nonce"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="startMining" returnType="void" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="difficulty"/>
+        </Method>
+        <Method name="stopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="getNonce" returnType="int" visibility="public"/>
+        <Method name="getTicket" returnType="int" visibility="public"/>
+        <Method name="isMining" returnType="boolean" visibility="public"/>
+        <Method name="mine" returnType="int" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="dificulty"/>
+        </Method>
+        <Method name="addNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="getNetwork" returnType="List&lt;RemoteInterface&gt;" visibility="public"/>
+        <Method name="addTransaction" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="getTransactionsList" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="synchonizeTransactions" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="list"/>
+        </Method>
+        <Method name="startMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="buildNewBlock" returnType="void" visibility="public"/>
+        <Method name="updateMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="getBlockchainSize" returnType="int" visibility="public"/>
+        <Method name="getBlockchain" returnType="BlockChain" visibility="public"/>
+        <Method name="synchonizeBlockchain" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="syncNode"/>
+        </Method>
+        <Method name="getLastBlock" returnType="List" visibility="public">
+          <Argument type="long" name="timeStamp"/>
+          <Argument type="int" name="dept"/>
+          <Argument type="int" name="maxDep"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

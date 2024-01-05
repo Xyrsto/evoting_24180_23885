@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="LoginServer">
+  <ClassDiagramComponents>
+    <Class name="LoginServer" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="myRemote" type="RemoteLoginInterface" visibility="package"/>
+        <Field name="remoteName" type="String" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="remotePort" type="int" visibility="public" isStatic="true"/>
+        <Field name="btStartServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPanel1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel3" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel6" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel8" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="pnMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServer" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServerMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="runningIcon" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="spMyServerPort" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="tpMain" type="javax.swing.JTabbedPane" visibility="private"/>
+        <Field name="txtData" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtField2" type="javax.swing.JPanel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+void" visibility="private"/>
+        <Method name="btStartServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

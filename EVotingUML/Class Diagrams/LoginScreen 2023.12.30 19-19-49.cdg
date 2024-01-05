@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="LoginScreen">
+  <ClassDiagramComponents>
+    <Class name="LoginScreen" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="loggedUser" type="String" visibility="package"/>
+        <Field name="mainScreen" type="MainScreen" visibility="private"/>
+        <Field name="host" type="String" visibility="package"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jButton2" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPasswordField1" type="javax.swing.JPasswordField" visibility="private"/>
+        <Field name="numCCTextArea" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="passwordTextArea" type="javax.swing.JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainScreen" name="mainScreen"/>
+        </Constructor>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+void" visibility="private"/>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

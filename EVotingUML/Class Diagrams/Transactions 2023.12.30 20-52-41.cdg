@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Transactions">
+  <ClassDiagramComponents>
+    <Class name="Transactions" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="MAXTRANSACTIONS" type="int" visibility="public" isStatic="true"/>
+        <Field name="list" type="List&lt;String&gt;" visibility="private" isFinal="true"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getList" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="contains" returnType="boolean" visibility="public">
+          <Argument type="String" name="trans"/>
+        </Method>
+        <Method name="addTransaction" returnType="void" visibility="public">
+          <Argument type="String" name="newTrans"/>
+        </Method>
+        <Method name="removeTransactions" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="lst"/>
+        </Method>
+        <Method name="synchronize" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="other"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="ServerMiner">
+  <ClassDiagramComponents>
+    <Class name="ServerMiner" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="myRemote" type="RemoteObject" visibility="package"/>
+        <Field name="btAddServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="btStartServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel5" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel6" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel7" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel8" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPanel1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel3" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel5" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel6" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel8" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel9" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane2" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane3" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane5" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane6" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane7" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane8" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="lstBlockchain" type="javax.swing.JList&lt;String&gt;" visibility="private"/>
+        <Field name="lstTransactions" type="javax.swing.JList&lt;String&gt;" visibility="private"/>
+        <Field name="pnBlochchain" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnBlockchianTop" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnBlockchianTop1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelCenter" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelCenter1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelLeft" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelLeft1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnNtework" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServer" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServerMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnTransaction" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="runningIcon" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="spDificulty" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="spMyServerPort" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="tpMain" type="javax.swing.JTabbedPane" visibility="private"/>
+        <Field name="txtBlockchain" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtData" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtField" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtField1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtField2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtHash" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtLog" type="javax.swing.JTextPane" visibility="private"/>
+        <Field name="txtNetwork" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtNodeAdress" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtNonce" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtTransaction" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="img" type="ImageIcon" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="int" name="px"/>
+          <Argument type="int" name="py"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+void" visibility="private"/>
+        <Method name="btStartServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="btAddServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="lstTransactionsValueChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ListSelectionEvent" name="evt"/>
+        </Method>
+        <Method name="lstBlockchainValueChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ListSelectionEvent" name="evt"/>
+        </Method>
+        <Method name="formWindowClosing" returnType="void" visibility="private">
+          <Argument type="java.awt.event.WindowEvent" name="evt"/>
+        </Method>
+        <Method name="txtNodeAdressActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="onStartServer" returnType="void" visibility="public">
+          <Argument type="String" name="adress"/>
+        </Method>
+        <Method name="onStartMining" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="int" name="zeros"/>
+        </Method>
+        <Method name="onStopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onMining" returnType="void" visibility="public">
+          <Argument type="int" name="number"/>
+        </Method>
+        <Method name="onNounceFound" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onAddNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="onUpdateTransactions" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="onUpdateBlockchain" returnType="void" visibility="public"/>
+        <Method name="onConsensus" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="desc"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

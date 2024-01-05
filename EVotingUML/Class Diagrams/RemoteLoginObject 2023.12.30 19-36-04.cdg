@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="RemoteLoginObject">
+  <ClassDiagramComponents>
+    <Class name="RemoteLoginObject" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="host" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="loginUser" returnType="String" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="registerUser" returnType="void" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

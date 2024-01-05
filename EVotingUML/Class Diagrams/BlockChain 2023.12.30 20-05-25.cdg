@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="BlockChain">
+  <ClassDiagramComponents>
+    <Class name="BlockChain" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="DEFAULT_FILENAME" type="String" visibility="public" isStatic="true"/>
+        <Field name="chain" type="List&lt;Block&gt;" visibility="package"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getChain" returnType="List&lt;Block&gt;" visibility="public"/>
+        <Method name="getLast" returnType="Block" visibility="public"/>
+        <Method name="addBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="isValid" returnType="boolean" visibility="public"/>
+        <Method name="contains" returnType="boolean" visibility="public">
+          <Argument type="Block" name="b"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="save" returnType="void" visibility="public">
+          <Argument type="String" name="fileName"/>
+        </Method>
+        <Method name="load" returnType="void" visibility="public">
+          <Argument type="String" name="fileName"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

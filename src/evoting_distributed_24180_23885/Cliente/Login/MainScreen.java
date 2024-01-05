@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import utils.RMI;
-import utils.SSLFactoryRMI;
 
 /**
  *
@@ -36,7 +35,7 @@ public class MainScreen extends javax.swing.JFrame {
     public ArrayList<Candidato> candidatos = new ArrayList<>();
     DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
     RemoteInterface remote;
-    String address = "192.168.1.236";
+    String address = "192.168.128.74";
 
     /**
      * Creates new form MainScreen
@@ -194,9 +193,9 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
-            if (RMISocketFactory.getSocketFactory() == null) {
+            /*if (RMISocketFactory.getSocketFactory() == null) {
                 RMISocketFactory.setSocketFactory(new SSLFactoryRMI());
-            }
+            }*/
 
             remote = (RemoteInterface) RMI.getRemote(address, 10_010, "RemoteMiner");
             setTitle(address);

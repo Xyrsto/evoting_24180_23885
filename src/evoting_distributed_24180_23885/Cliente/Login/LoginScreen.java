@@ -29,7 +29,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     String loggedUser;
     private MainScreen mainScreen;
-    String host = "192.168.1.236";
+    String host = "192.168.128.218";
 
     /**
      * Creates new form Client
@@ -165,9 +165,10 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String remoteObject = String.format("//%s:%d/%s", host, LoginServer.remotePort, LoginServer.remoteName);
+        String remoteObject = String.format("//%s:%d/%s", host, 10_011, LoginServer.remoteName);
         try {
             RemoteLoginInterface remoteRegister = (RemoteLoginInterface) Naming.lookup(remoteObject);
+            System.out.println("conectado ao " + host);
             remoteRegister.registerUser(numCCTextArea.getText(), jPasswordField1.getText());
 
             if (loggedUser != null) {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="MiningListener">
+  <ClassDiagramComponents>
+    <Interface name="MiningListener" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Methods>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="onStartServer" returnType="void" visibility="public">
+          <Argument type="String" name="adress"/>
+        </Method>
+        <Method name="onAddNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="onStartMining" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="int" name="zeros"/>
+        </Method>
+        <Method name="onStopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onMining" returnType="void" visibility="public">
+          <Argument type="int" name="number"/>
+        </Method>
+        <Method name="onNounceFound" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onUpdateTransactions" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="onUpdateBlockchain" returnType="void" visibility="public"/>
+        <Method name="onConsensus" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="desc"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

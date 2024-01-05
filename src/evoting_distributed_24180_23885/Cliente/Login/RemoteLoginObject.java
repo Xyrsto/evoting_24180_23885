@@ -158,6 +158,7 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
                     // lê ficheiro
                     eleitores = (HashMap<String, Integer>) ois.readObject();
                     System.out.println("leu hashmap");
+                    System.out.println(eleitores);
                 } catch (FileNotFoundException e) {
                     // ficheiro não existente
                     eleitores = new HashMap<>();
@@ -171,6 +172,7 @@ public class RemoteLoginObject extends UnicastRemoteObject implements RemoteLogi
                 // gravar de volta no ficheiro
                 try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("eleitoresHashMap"))) {            
                     oos.writeObject(eleitores);
+                    System.out.println(eleitores);
                     System.out.println("guardou hashmap");
                 }
             } catch (Exception err) {

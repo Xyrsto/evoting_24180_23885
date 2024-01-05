@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="MainScreen">
+  <ClassDiagramComponents>
+    <Class name="MainScreen" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="loggedUser" type="String" visibility="private"/>
+        <Field name="candidatos" type="ArrayList&lt;Candidato&gt;" visibility="public"/>
+        <Field name="model" type="DefaultComboBoxModel&lt;String&gt;" visibility="package"/>
+        <Field name="remote" type="RemoteInterface" visibility="package"/>
+        <Field name="address" type="String" visibility="package"/>
+        <Field name="candidatosCombo" type="javax.swing.JComboBox&lt;String&gt;" visibility="private"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jMenu1" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenu2" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenuBar1" type="javax.swing.JMenuBar" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jTextArea1" type="javax.swing.JTextArea" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="minerAddress"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setLoggedUser" returnType="void" visibility="public">
+          <Argument type="String" name="loggedUser"/>
+        </Method>
+        <Method name="getLoggedUser" returnType="String" visibility="public"/>
+        <Method name="updateCandidatos" returnType="void" visibility="public">
+          <Argument type="Candidato" name="newCand"/>
+        </Method>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+void" visibility="private"/>
+        <Method name="jMenu1MenuSelected" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.MenuEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMenu2MenuSelected" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.MenuEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="loadCandidatos" returnType="void" visibility="public"/>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="handlePartyVoteCount" returnType="void" visibility="public">
+          <Argument type="String" name="eleitorId"/>
+          <Argument type="String" name="candidato"/>
+        </Method>
+        <Method name="displayResults" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations/>
+</ClassDiagram>

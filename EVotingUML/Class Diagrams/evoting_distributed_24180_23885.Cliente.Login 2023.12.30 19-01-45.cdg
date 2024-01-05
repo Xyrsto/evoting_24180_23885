@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="evoting_distributed_24180_23885.Cliente.Login">
+  <ClassDiagramComponents>
+    <Class name="AddCandidato" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="295.0" yPosition="232.0">
+      <Fields>
+        <Field name="mainWindow" type="MainScreen" visibility="public" isStatic="true"/>
+        <Field name="list" type="ArrayList&lt;Object&gt;" visibility="public"/>
+        <Field name="loggedUser" type="String" visibility="private"/>
+        <Field name="filler1" type="javax.swing.Box.Filler" visibility="private"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jTextField1" type="javax.swing.JTextField" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainScreen" name="mainWindow"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Block" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="320.0" yPosition="545.0">
+      <Fields>
+        <Field name="DIFICULTY" type="int" visibility="public" isStatic="true"/>
+        <Field name="previous" type="String" visibility="package"/>
+        <Field name="data" type="String" visibility="package"/>
+        <Field name="numberOfZeros" type="int" visibility="package"/>
+        <Field name="hash" type="String" visibility="package"/>
+        <Field name="nonce" type="int" visibility="package"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="String" name="previous"/>
+          <Argument type="int" name="zeros"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMiningData" returnType="String" visibility="public" isFinal="true"/>
+        <Method name="getPrevious" returnType="String" visibility="public"/>
+        <Method name="getNonce" returnType="int" visibility="public"/>
+        <Method name="getNumberOfZeros" returnType="int" visibility="public"/>
+        <Method name="getHash" returnType="String" visibility="public"/>
+        <Method name="getData" returnType="String" visibility="public"/>
+        <Method name="setNonce" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="isValid" returnType="boolean" visibility="public"/>
+        <Method name="getInfo" returnType="String" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="obj"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="BlockChain" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="628.0" yPosition="643.0">
+      <Fields>
+        <Field name="DEFAULT_FILENAME" type="String" visibility="public" isStatic="true"/>
+        <Field name="chain" type="List&lt;Block&gt;" visibility="package"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getChain" returnType="List&lt;Block&gt;" visibility="public"/>
+        <Method name="getLast" returnType="Block" visibility="public"/>
+        <Method name="addBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="isValid" returnType="boolean" visibility="public"/>
+        <Method name="contains" returnType="boolean" visibility="public">
+          <Argument type="Block" name="b"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="save" returnType="void" visibility="public">
+          <Argument type="String" name="fileName"/>
+        </Method>
+        <Method name="load" returnType="void" visibility="public">
+          <Argument type="String" name="fileName"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="BlockchainException" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="msg"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="show" returnType="void" visibility="public"/>
+        <Method name="printStackTrace" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Histogram" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="getMostCommon" returnType="Object" visibility="public">
+          <Argument type="List" name="lst"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LastBlock" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="myNode" type="RemoteObject" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="RemoteObject" name="myNode"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getLastBlock" returnType="Block" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="MinerP2P" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="data" type="String" visibility="package"/>
+        <Field name="ticket" type="AtomicInteger" visibility="package"/>
+        <Field name="nonce" type="AtomicInteger" visibility="package"/>
+        <Field name="listener" type="MiningListener" visibility="package"/>
+        <Field name="worker" type="MinerTHR" visibility="package"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MiningListener" name="listener"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="startMining" returnType="void" visibility="public">
+          <Argument type="String" name="data"/>
+          <Argument type="int" name="dificulty"/>
+        </Method>
+        <Method name="stopMining" returnType="void" visibility="public">
+          <Argument type="int" name="number"/>
+        </Method>
+        <Method name="getTicket" returnType="int" visibility="public"/>
+        <Method name="getData" returnType="String" visibility="public"/>
+        <Method name="isMining" returnType="boolean" visibility="public"/>
+        <Method name="getNonce" returnType="int" visibility="public"/>
+        <Method name="waitToNonce" returnType="int" visibility="public"/>
+        <Method name="getHash" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="data"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RemoteObject" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="463.0" yPosition="1057.0">
+      <Fields>
+        <Field name="listener" type="MiningListener" visibility="package"/>
+        <Field name="myMiner" type="MinerP2P" visibility="package"/>
+        <Field name="transactions" type="Transactions" visibility="package"/>
+        <Field name="miningBlock" type="Block" visibility="public"/>
+        <Field name="blockchain" type="BlockChain" visibility="public"/>
+        <Field name="address" type="String" visibility="private"/>
+        <Field name="network" type="List&lt;RemoteInterface&gt;" visibility="private"/>
+        <Field name="flagLastBlock" type="Map&lt;Long, Boolean&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="MiningListener" name="listener"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getAdress" returnType="String" visibility="public"/>
+        <Method name="getClientName" returnType="String" visibility="public"/>
+        <Method name="getHash" returnType="String" visibility="public">
+          <Argument type="int" name="nonce"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="startMining" returnType="void" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="difficulty"/>
+        </Method>
+        <Method name="stopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="getNonce" returnType="int" visibility="public"/>
+        <Method name="getTicket" returnType="int" visibility="public"/>
+        <Method name="isMining" returnType="boolean" visibility="public"/>
+        <Method name="mine" returnType="int" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="dificulty"/>
+        </Method>
+        <Method name="addNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="getNetwork" returnType="List&lt;RemoteInterface&gt;" visibility="public"/>
+        <Method name="addTransaction" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="getTransactionsList" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="synchonizeTransactions" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="list"/>
+        </Method>
+        <Method name="startMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="buildNewBlock" returnType="void" visibility="public"/>
+        <Method name="updateMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="newBlock"/>
+        </Method>
+        <Method name="getBlockchainSize" returnType="int" visibility="public"/>
+        <Method name="getBlockchain" returnType="BlockChain" visibility="public"/>
+        <Method name="synchonizeBlockchain" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="syncNode"/>
+        </Method>
+        <Method name="getLastBlock" returnType="List" visibility="public">
+          <Argument type="long" name="timeStamp"/>
+          <Argument type="int" name="dept"/>
+          <Argument type="int" name="maxDep"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ServerMiner" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="848.0" yPosition="183.0">
+      <Fields>
+        <Field name="myRemote" type="RemoteObject" visibility="package"/>
+        <Field name="btAddServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="btStartServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel5" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel6" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel7" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel8" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPanel1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel3" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel5" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel6" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel8" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel9" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane2" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane3" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane5" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane6" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane7" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jScrollPane8" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="lstBlockchain" type="javax.swing.JList&lt;String&gt;" visibility="private"/>
+        <Field name="lstTransactions" type="javax.swing.JList&lt;String&gt;" visibility="private"/>
+        <Field name="pnBlochchain" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnBlockchianTop" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnBlockchianTop1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelCenter" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelCenter1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelLeft" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnLabelLeft1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnNtework" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServer" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServerMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnTransaction" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="runningIcon" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="spDificulty" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="spMyServerPort" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="tpMain" type="javax.swing.JTabbedPane" visibility="private"/>
+        <Field name="txtBlockchain" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtData" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtField" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtField1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtField2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="txtHash" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtLog" type="javax.swing.JTextPane" visibility="private"/>
+        <Field name="txtNetwork" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtNodeAdress" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtNonce" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="txtTransaction" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="img" type="ImageIcon" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+          <Argument type="int" name="px"/>
+          <Argument type="int" name="py"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="btStartServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="btAddServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="lstTransactionsValueChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ListSelectionEvent" name="evt"/>
+        </Method>
+        <Method name="lstBlockchainValueChanged" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.ListSelectionEvent" name="evt"/>
+        </Method>
+        <Method name="formWindowClosing" returnType="void" visibility="private">
+          <Argument type="java.awt.event.WindowEvent" name="evt"/>
+        </Method>
+        <Method name="txtNodeAdressActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="onStartServer" returnType="void" visibility="public">
+          <Argument type="String" name="adress"/>
+        </Method>
+        <Method name="onStartMining" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="int" name="zeros"/>
+        </Method>
+        <Method name="onStopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onMining" returnType="void" visibility="public">
+          <Argument type="int" name="number"/>
+        </Method>
+        <Method name="onNounceFound" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onAddNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="onUpdateTransactions" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="onUpdateBlockchain" returnType="void" visibility="public"/>
+        <Method name="onConsensus" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="desc"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Transactions" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="1539.0" yPosition="183.0">
+      <Fields>
+        <Field name="MAXTRANSACTIONS" type="int" visibility="public" isStatic="true"/>
+        <Field name="list" type="List&lt;String&gt;" visibility="private" isFinal="true"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getList" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="contains" returnType="boolean" visibility="public">
+          <Argument type="String" name="trans"/>
+        </Method>
+        <Method name="addTransaction" returnType="void" visibility="public">
+          <Argument type="String" name="newTrans"/>
+        </Method>
+        <Method name="removeTransactions" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="lst"/>
+        </Method>
+        <Method name="synchronize" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="other"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Vote" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="1565.0" yPosition="643.0">
+      <Fields>
+        <Field name="eleitor" type="String" visibility="private"/>
+        <Field name="candidato" type="String" visibility="private"/>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="eleitor"/>
+          <Argument type="String" name="candidato"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getEleitor" returnType="String" visibility="public"/>
+        <Method name="setEleitor" returnType="void" visibility="public">
+          <Argument type="String" name="eleitor"/>
+        </Method>
+        <Method name="getCandidato" returnType="String" visibility="public"/>
+        <Method name="setCandidato" returnType="void" visibility="public">
+          <Argument type="String" name="candidato"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+        <Method name="toText" returnType="String" visibility="public"/>
+        <Method name="fromText" returnType="Vote" visibility="public" isStatic="true">
+          <Argument type="String" name="obj"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="t"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="DistributedMain" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="1539.0" yPosition="497.0">
+      <Fields>
+        <Field name="host" type="String" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LoginScreen" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields>
+        <Field name="loggedUser" type="String" visibility="package"/>
+        <Field name="mainScreen" type="MainScreen" visibility="private"/>
+        <Field name="host" type="String" visibility="package"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jButton2" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPasswordField1" type="javax.swing.JPasswordField" visibility="private"/>
+        <Field name="numCCTextArea" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="passwordTextArea" type="javax.swing.JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MainScreen" name="mainScreen"/>
+        </Constructor>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jButton2ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LoginServer" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="1685.0" yPosition="1082.0">
+      <Fields>
+        <Field name="myRemote" type="RemoteLoginInterface" visibility="package"/>
+        <Field name="remoteName" type="String" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="remotePort" type="int" visibility="public" isStatic="true"/>
+        <Field name="btStartServer" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jPanel1" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel2" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel3" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel6" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jPanel8" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="pnMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServer" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="pnServerMining" type="javax.swing.JPanel" visibility="private"/>
+        <Field name="runningIcon" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="spMyServerPort" type="javax.swing.JSpinner" visibility="private"/>
+        <Field name="tpMain" type="javax.swing.JTabbedPane" visibility="private"/>
+        <Field name="txtData" type="javax.swing.JTextArea" visibility="private"/>
+        <Field name="txtField2" type="javax.swing.JPanel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="btStartServerActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MainScreen" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="2533.0" yPosition="59.0">
+      <Fields>
+        <Field name="loggedUser" type="String" visibility="private"/>
+        <Field name="candidatos" type="ArrayList&lt;Candidato&gt;" visibility="public"/>
+        <Field name="model" type="DefaultComboBoxModel&lt;String&gt;" visibility="package"/>
+        <Field name="remote" type="RemoteInterface" visibility="package"/>
+        <Field name="address" type="String" visibility="package"/>
+        <Field name="candidatosCombo" type="javax.swing.JComboBox&lt;String&gt;" visibility="private"/>
+        <Field name="jButton1" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jMenu1" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenu2" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenuBar1" type="javax.swing.JMenuBar" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jTextArea1" type="javax.swing.JTextArea" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="minerAddress"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setLoggedUser" returnType="void" visibility="public">
+          <Argument type="String" name="loggedUser"/>
+        </Method>
+        <Method name="getLoggedUser" returnType="String" visibility="public"/>
+        <Method name="updateCandidatos" returnType="void" visibility="public">
+          <Argument type="Candidato" name="newCand"/>
+        </Method>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jMenu1MenuSelected" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.MenuEvent" name="evt"/>
+        </Method>
+        <Method name="jButton1ActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jMenu2MenuSelected" returnType="void" visibility="private">
+          <Argument type="javax.swing.event.MenuEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="loadCandidatos" returnType="void" visibility="public"/>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="handlePartyVoteCount" returnType="void" visibility="public">
+          <Argument type="String" name="eleitorId"/>
+          <Argument type="String" name="candidato"/>
+        </Method>
+        <Method name="displayResults" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="RemoteLoginObject" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="2182.0" yPosition="873.0">
+      <Fields>
+        <Field name="host" type="String" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="loginUser" returnType="String" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="registerUser" returnType="void" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="MiningListener" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Methods>
+        <Method name="onException" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="Exception" name="ex"/>
+        </Method>
+        <Method name="onMessage" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="onStartServer" returnType="void" visibility="public">
+          <Argument type="String" name="adress"/>
+        </Method>
+        <Method name="onAddNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="onStartMining" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="int" name="zeros"/>
+        </Method>
+        <Method name="onStopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onMining" returnType="void" visibility="public">
+          <Argument type="int" name="number"/>
+        </Method>
+        <Method name="onNounceFound" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="onUpdateTransactions" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="onUpdateBlockchain" returnType="void" visibility="public"/>
+        <Method name="onConsensus" returnType="void" visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="String" name="desc"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="RemoteInterface" package="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils" visibility="public" xPosition="2533.0" yPosition="715.0">
+      <Methods>
+        <Method name="startMining" returnType="void" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="dificulty"/>
+        </Method>
+        <Method name="stopMining" returnType="void" visibility="public">
+          <Argument type="int" name="nonce"/>
+        </Method>
+        <Method name="getNonce" returnType="int" visibility="public"/>
+        <Method name="getTicket" returnType="int" visibility="public"/>
+        <Method name="isMining" returnType="boolean" visibility="public"/>
+        <Method name="mine" returnType="int" visibility="public">
+          <Argument type="String" name="msg"/>
+          <Argument type="int" name="dificulty"/>
+        </Method>
+        <Method name="getHash" returnType="String" visibility="public">
+          <Argument type="int" name="nonce"/>
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="getAdress" returnType="String" visibility="public"/>
+        <Method name="addNode" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="node"/>
+        </Method>
+        <Method name="getNetwork" returnType="List&lt;RemoteInterface&gt;" visibility="public"/>
+        <Method name="addTransaction" returnType="void" visibility="public">
+          <Argument type="String" name="transaction"/>
+        </Method>
+        <Method name="synchonizeTransactions" returnType="void" visibility="public">
+          <Argument type="List&lt;String&gt;" name="list"/>
+        </Method>
+        <Method name="getTransactionsList" returnType="List&lt;String&gt;" visibility="public"/>
+        <Method name="startMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="bl"/>
+        </Method>
+        <Method name="updateMiningBlock" returnType="void" visibility="public">
+          <Argument type="Block" name="bl"/>
+        </Method>
+        <Method name="buildNewBlock" returnType="void" visibility="public"/>
+        <Method name="synchonizeBlockchain" returnType="void" visibility="public">
+          <Argument type="RemoteInterface" name="syncNode"/>
+        </Method>
+        <Method name="getBlockchainSize" returnType="int" visibility="public"/>
+        <Method name="getBlockchain" returnType="BlockChain" visibility="public"/>
+        <Method name="getLastBlock" returnType="List" visibility="public">
+          <Argument type="long" name="timeStamp"/>
+          <Argument type="int" name="dept"/>
+          <Argument type="int" name="maxDep"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="RemoteLoginInterface" package="evoting_distributed_24180_23885.Cliente.Login" visibility="public" xPosition="1837.0" yPosition="873.0">
+      <Methods>
+        <Method name="loginUser" returnType="String" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+        <Method name="registerUser" returnType="void" visibility="public">
+          <Argument type="String" name="numCC"/>
+          <Argument type="String" name="password"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.BlockChain" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.ServerMiner" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MiningListener"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="network" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;RemoteInterface&gt;"/>
+    <HasRelation name="miningBlock" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listener" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MinerP2P" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MiningListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="MiningListener"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MiningListener" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.ServerMiner" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.BlockChain" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="myRemote" source="evoting_distributed_24180_23885.Cliente.Login.LoginServer" target="evoting_distributed_24180_23885.Cliente.Login.RemoteLoginInterface" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Vote" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="myNode" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.LastBlock" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="evoting_distributed_24180_23885.Cliente.Login.RemoteLoginObject" target="evoting_distributed_24180_23885.Cliente.Login.RemoteLoginInterface"/>
+    <HasRelation name="blockchain" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.BlockChain" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="remote" source="evoting_distributed_24180_23885.Cliente.Login.MainScreen" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteInterface" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.LastBlock" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listener" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MiningListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="MiningListener"/>
+    <HasRelation name="mainWindow" source="evoting_distributed_24180_23885.Cliente.Login.AddCandidato" target="evoting_distributed_24180_23885.Cliente.Login.MainScreen" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="chain" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.BlockChain" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Block&gt;"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.BlockChain" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="transactions" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Transactions" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="mainScreen" source="evoting_distributed_24180_23885.Cliente.Login.LoginScreen" target="evoting_distributed_24180_23885.Cliente.Login.MainScreen" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.Block" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="myMiner" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.MinerP2P" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="myRemote" source="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.ServerMiner" target="evoting_distributed_24180_23885.Cliente.Login.BlockchainUtils.RemoteObject" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
